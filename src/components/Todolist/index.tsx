@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { ITodolistProps } from './types';
 
-const Todolist: FC<ITodolistProps> = ({ title, todolistItemData }) => {
+const Todolist: FC<ITodolistProps> = ({ title, todolistItemData, onRemoveTask }) => {
   return (
     <div>
       <h3>{title}</h3>
@@ -12,8 +12,13 @@ const Todolist: FC<ITodolistProps> = ({ title, todolistItemData }) => {
       <ul>
         {todolistItemData.map((todolist) => (
           <li key={todolist.id}>
-            <input type="checkbox" checked={todolist.checked} />
+            <input
+              onClick={() => console.log(todolist.id)}
+              type="checkbox"
+              checked={todolist.checked}
+            />
             <span>{todolist.title}</span>
+            <button onClick={() => onRemoveTask(todolist.id)}>x</button>
           </li>
         ))}
       </ul>
