@@ -7,6 +7,7 @@ const Todolist: FC<ITodolistProps> = ({
   onRemoveTask,
   onChangeFilter,
   addTask,
+  onChangeStatus,
 }) => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
@@ -15,8 +16,10 @@ const Todolist: FC<ITodolistProps> = ({
   };
 
   const onAddTask = () => {
-    addTask(newTaskTitle);
-    setNewTaskTitle('');
+    if (newTaskTitle.trim() !== '') {
+      addTask(newTaskTitle);
+      setNewTaskTitle('');
+    }
   };
 
   const onEnterAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -37,13 +40,12 @@ const Todolist: FC<ITodolistProps> = ({
       <ul>
         {todolistItemData.map((todolist) => {
           const onRemoveHandler = () => onRemoveTask(todolist.id);
+          const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+            onChangeStatus(todolist.id, e.currentTarget.checked);
+          };
           return (
             <li key={todolist.id}>
-              <input
-                onClick={() => console.log(todolist.id)}
-                type="checkbox"
-                checked={todolist.checked}
-              />
+              <input onChange={onChangeStatusHandler} type="checkbox" checked={todolist.checked} />
               <span>{todolist.title}</span>
               <button onClick={onRemoveHandler}>x</button>
             </li>

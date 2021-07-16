@@ -32,6 +32,14 @@ const App: FC = () => {
     tasksForTodolist = tasksData.filter((item) => item.checked);
   }
 
+  const onChangeStatus = (id: string, status: boolean) => {
+    let task = tasksData.find((item) => item.id === id);
+    if (task) {
+      task.checked = status;
+    }
+    setTasksData([...tasksData]);
+  };
+
   return (
     <>
       <Todolist
@@ -40,6 +48,7 @@ const App: FC = () => {
         onRemoveTask={onRemoveTask}
         onChangeFilter={onChangeFilter}
         addTask={addTask}
+        onChangeStatus={onChangeStatus}
       />
     </>
   );
