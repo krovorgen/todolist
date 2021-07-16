@@ -3,3 +3,5 @@ export type TodolistItemData = {
   title: string;
   checked: boolean;
 };
+
+export type FilterType = 'all' | 'active' | 'completed'
