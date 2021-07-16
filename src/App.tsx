@@ -31,6 +31,11 @@ const App: FC = () => {
   if (filter === 'completed') {
     tasksForTodolist = tasksData.filter((item) => item.checked);
   }
+  // useEffect(() => {
+  //   let tasksForTodolist = tasksData;
+  //   filter === 'active' && tasksForTodolist.filter((item) => !item.checked);
+  //   filter === 'completed' && tasksForTodolist.filter((item) => item.checked);
+  // }, [filter, tasksData]);
 
   const onChangeStatus = (id: string, status: boolean) => {
     let task = tasksData.find((item) => item.id === id);
@@ -49,6 +54,7 @@ const App: FC = () => {
         onChangeFilter={onChangeFilter}
         addTask={addTask}
         onChangeStatus={onChangeStatus}
+        filter={filter}
       />
     </>
   );

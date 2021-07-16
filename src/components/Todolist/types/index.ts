@@ -7,4 +7,5 @@ export interface ITodolistProps {
   onChangeFilter: (filterValue: FilterType) => void;
   addTask: (inputValue: string) => void;
   onChangeStatus: (id: string, status: boolean) => void;
+  filter: FilterType;
 }
