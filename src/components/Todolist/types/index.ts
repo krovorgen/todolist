@@ -10,4 +10,6 @@ export interface ITodolistProps {
   onChangeStatus: (id: string, status: boolean, todolistId: string) => void;
   filter: FilterType;
   removeTodolist: (id: string) => void;
+  onChangeTaskText: (id: string, newValue: string, todolistId: string) => void;
+  onChangeTitleTodolist: (newValue: string, todolistId: string) => void;
 }
