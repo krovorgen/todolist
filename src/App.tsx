@@ -71,32 +71,31 @@ const App: FC = () => {
   return (
     <>
       <AddItemForm callback={addTodolist} />
-      {todolistData &&
-        todolistData.map((todolist) => {
-          let tasksForTodolist = tasksData[todolist.id];
-          if (todolist.filter === 'active') {
-            tasksForTodolist = tasksForTodolist.filter((item) => !item.checked);
-          }
-          if (todolist.filter === 'completed') {
-            tasksForTodolist = tasksForTodolist.filter((item) => item.checked);
-          }
-          return (
-            <Todolist
-              key={todolist.id}
-              id={todolist.id}
-              title={todolist.title}
-              todolistItemData={tasksForTodolist}
-              onRemoveTask={onRemoveTask}
-              onChangeFilter={onChangeFilter}
-              addTask={addTask}
-              onChangeStatus={onChangeStatus}
-              filter={todolist.filter}
-              removeTodolist={removeTodolist}
-              onChangeTaskText={onChangeTaskText}
-              onChangeTitleTodolist={onChangeTitleTodolist}
-            />
-          );
-        })}
+      {todolistData.map((todolist) => {
+        let tasksForTodolist = tasksData[todolist.id];
+        if (todolist.filter === 'active') {
+          tasksForTodolist = tasksForTodolist.filter((item) => !item.checked);
+        }
+        if (todolist.filter === 'completed') {
+          tasksForTodolist = tasksForTodolist.filter((item) => item.checked);
+        }
+        return (
+          <Todolist
+            key={todolist.id}
+            id={todolist.id}
+            title={todolist.title}
+            todolistItemData={tasksForTodolist}
+            onRemoveTask={onRemoveTask}
+            onChangeFilter={onChangeFilter}
+            addTask={addTask}
+            onChangeStatus={onChangeStatus}
+            filter={todolist.filter}
+            removeTodolist={removeTodolist}
+            onChangeTaskText={onChangeTaskText}
+            onChangeTitleTodolist={onChangeTitleTodolist}
+          />
+        );
+      })}
     </>
   );
 };
