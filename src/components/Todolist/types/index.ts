@@ -1,11 +1,13 @@
 import { FilterType, TodolistItemData } from '../../../types';
 
 export interface ITodolistProps {
+  id: string;
   todolistItemData: TodolistItemData[];
   title: string;
-  onRemoveTask: (id: string) => void;
-  onChangeFilter: (filterValue: FilterType) => void;
-  addTask: (inputValue: string) => void;
-  onChangeStatus: (id: string, status: boolean) => void;
+  onRemoveTask: (id: string, todolistId: string) => void;
+  onChangeFilter: (filterValue: FilterType, id: string) => void;
+  addTask: (inputValue: string, todolistId: string) => void;
+  onChangeStatus: (id: string, status: boolean, todolistId: string) => void;
   filter: FilterType;
+  removeTodolist: (id: string) => void;
 }

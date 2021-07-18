@@ -4,6 +4,7 @@ import { ITodolistProps } from './types';
 import styles from './style.module.scss';
 
 const Todolist: FC<ITodolistProps> = ({
+  id,
   title,
   todolistItemData,
   onRemoveTask,
@@ -11,6 +12,7 @@ const Todolist: FC<ITodolistProps> = ({
   addTask,
   onChangeStatus,
   filter,
+  removeTodolist,
 }) => {
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +23,7 @@ const Todolist: FC<ITodolistProps> = ({
 
   const onAddTask = () => {
     if (newTaskTitle.trim() !== '') {
-      addTask(newTaskTitle);
+      addTask(newTaskTitle, id);
       setNewTaskTitle('');
     } else {
       setError('Invalid value');
@@ -34,13 +36,19 @@ const Todolist: FC<ITodolistProps> = ({
     e.key === 'Enter' && onAddTask();
   };
 
-  const onAllClickHandler = () => onChangeFilter('all');
-  const onActiveClickHandler = () => onChangeFilter('active');
-  const onCompletedClickHandler = () => onChangeFilter('completed');
+  const onAllClickHandler = () => onChangeFilter('all', id);
+  const onActiveClickHandler = () => onChangeFilter('active', id);
+  const onCompletedClickHandler = () => onChangeFilter('completed', id);
+
+  const removeTodolistHandler = () => {
+    removeTodolist(id);
+  };
 
   return (
     <div>
-      <h3>{title}</h3>
+      <h3>
+        {title} <button onClick={removeTodolistHandler}>x</button>
+      </h3>
       <div>
         <input
           className={error !== null ? styles['error__input'] : ''}
@@ -53,9 +61,9 @@ const Todolist: FC<ITodolistProps> = ({
       {error && <span className={styles['error__message']}>{error}</span>}
       <ul>
         {todolistItemData.map((todolist) => {
-          const onRemoveHandler = () => onRemoveTask(todolist.id);
+          const onRemoveHandler = () => onRemoveTask(todolist.id, id);
           const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            onChangeStatus(todolist.id, e.currentTarget.checked);
+            onChangeStatus(todolist.id, e.currentTarget.checked, id);
           };
           return (
             <li key={todolist.id}>
