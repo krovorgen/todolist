@@ -1,3 +1,5 @@
+import rootReducer from '../redux/root-reducer';
+
 export type TodolistItemData = {
   id: string;
   title: string;
@@ -15,3 +17,5 @@ export type TodolistDataType = {
 export interface AllTasksType {
   [key: string]: TodolistItemData[];
 }
+
+export type RootStateType = ReturnType<typeof rootReducer>;

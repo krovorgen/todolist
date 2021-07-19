@@ -9,7 +9,9 @@ import {
 import { v1 } from 'uuid';
 import { ADD_TODOLIST, REMOVE_TODOLIST } from '../actions/types/todolists-actions.type';
 
-export const tasksReducer = (state: AllTasksType, action: TasksActionType): AllTasksType => {
+const initialState: AllTasksType = {};
+
+export const tasksReducer = (state = initialState, action: TasksActionType): AllTasksType => {
   switch (action.type) {
     case ADD_TASK: {
       let newTask: TodolistItemData = {
@@ -61,6 +63,6 @@ export const tasksReducer = (state: AllTasksType, action: TasksActionType): AllT
     }
 
     default:
-      throw new Error("I don't understand this type");
+      return state;
   }
 };

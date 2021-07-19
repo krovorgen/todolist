@@ -1,5 +1,3 @@
-import { v1 } from 'uuid';
-
 import { TodolistDataType } from '../../types';
 import {
   ADD_TODOLIST,
@@ -9,22 +7,22 @@ import {
   TodolistsActionType,
 } from '../actions/types/todolists-actions.type';
 
+const initialState: TodolistDataType[] = [];
+
 export const todolistsReducer = (
-  state: TodolistDataType[],
+  state = initialState,
   action: TodolistsActionType
 ): TodolistDataType[] => {
   switch (action.type) {
-    case REMOVE_TODOLIST: {
-      return state.filter((item) => item.id !== action.payload);
+    case ADD_TODOLIST: {
+      return [
+        ...state,
+        { id: action.payload.todolistID, title: action.payload.newTodolistTitle, filter: 'all' },
+      ];
     }
 
-    case ADD_TODOLIST: {
-      let newTodolist: TodolistDataType = {
-        id: action.payload.todolistID,
-        title: action.payload.newTodolistTitle,
-        filter: 'all',
-      };
-      return [...state, newTodolist];
+    case REMOVE_TODOLIST: {
+      return state.filter((item) => item.id !== action.payload);
     }
 
     case CHANGE_TODOLIST_TITLE: {
@@ -44,6 +42,6 @@ export const todolistsReducer = (
     }
 
     default:
-      throw new Error("I don't understand this type");
+      return state;
   }
 };

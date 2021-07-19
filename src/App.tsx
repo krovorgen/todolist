@@ -1,78 +1,60 @@
-import React, { FC, useState } from 'react';
-import { v1 } from 'uuid';
+import React, { FC } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { Todolist } from './components';
-import { AllTasksType, FilterType, TodolistDataType, TodolistItemData } from './types';
+import { FilterType, RootStateType } from './types';
 import AddItemForm from './components/AddItemForm';
+import {
+  addTaskAC,
+  changeStatusAC,
+  changeTaskTextAC,
+  removeTaskAC,
+} from './redux/actions/tasks-actions';
+import {
+  addTodolistAC,
+  changeTodolistFilterAC,
+  changeTodolistTitleAC,
+  RemoveTodolistAC,
+} from './redux/actions/todolists-actions';
 
 const App: FC = () => {
-  let [tasksData, setTasksData] = useState<AllTasksType>({});
+  const dispatch = useDispatch();
 
-  let [todolistData, setTodolistData] = useState<TodolistDataType[]>([]);
-
-  console.log('tasksData', tasksData);
-  console.log('todolistData', todolistData);
-
-  const removeTask = (id: string, todolistId: string) => {
-    tasksData[todolistId] = tasksData[todolistId].filter((item) => item.id !== id);
-    setTasksData({ ...tasksData });
-  };
+  const { todolists, tasks } = useSelector((state: RootStateType) => state);
 
   const addTask = (inputValue: string, todolistId: string) => {
-    let newTask: TodolistItemData = { id: v1(), title: inputValue, checked: false };
-    tasksData[todolistId] = [...tasksData[todolistId], newTask];
-    setTasksData({ ...tasksData });
+    dispatch(addTaskAC(inputValue, todolistId));
   };
 
-  const onChangeFilter = (filterValue: FilterType, id: string) => {
-    let todolist = todolistData.find((item) => item.id === id);
-    if (todolist) {
-      todolist.filter = filterValue;
-      setTodolistData([...todolistData]);
-    }
+  const removeTask = (id: string, todolistId: string) => {
+    dispatch(removeTaskAC(id, todolistId));
   };
 
   const onChangeStatus = (id: string, status: boolean, todolistId: string) => {
-    let task = tasksData[todolistId].find((item) => item.id === id);
-    if (task) {
-      task.checked = status;
-      setTasksData({ ...tasksData });
-    }
+    dispatch(changeStatusAC(id, status, todolistId));
   };
 
   const onChangeTaskText = (id: string, newValue: string, todolistId: string) => {
-    let task = tasksData[todolistId].find((item) => item.id === id);
-    if (task) {
-      task.title = newValue;
-      setTasksData({ ...tasksData });
-    }
+    dispatch(changeTaskTextAC(id, newValue, todolistId));
+  };
+
+  const onChangeFilter = (filterValue: FilterType, id: string) => {
+    dispatch(changeTodolistFilterAC(id, filterValue));
   };
 
   const onChangeTitleTodolist = (newValue: string, todolistId: string) => {
-    let todolist = todolistData.find((item) => item.id === todolistId);
-    if (todolist) {
-      todolist.title = newValue;
-      setTodolistData([...todolistData]);
-    }
+    dispatch(changeTodolistTitleAC(todolistId, newValue));
   };
 
-  const removeTodolist = (id: string) => {
-    setTodolistData([...todolistData.filter((item) => item.id !== id)]);
-    delete tasksData[id];
-    setTasksData({ ...tasksData });
-  };
+  const removeTodolist = (id: string) => dispatch(RemoveTodolistAC(id));
 
-  const addTodolist = (title: string) => {
-    let newTodolist: TodolistDataType = { id: v1(), title: title, filter: 'all' };
-    setTodolistData([...todolistData, newTodolist]);
-    setTasksData({ ...tasksData, [newTodolist.id]: [] });
-  };
+  const addTodolist = (title: string) => dispatch(addTodolistAC(title));
 
   return (
     <>
       <AddItemForm callback={addTodolist} />
-      {todolistData.map((todolist) => {
-        let tasksForTodolist = tasksData[todolist.id];
+      {todolists.map((todolist) => {
+        let tasksForTodolist = tasks[todolist.id];
         if (todolist.filter === 'active') {
           tasksForTodolist = tasksForTodolist.filter((item) => !item.checked);
         }
