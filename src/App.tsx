@@ -13,7 +13,7 @@ const App: FC = () => {
   console.log('tasksData', tasksData);
   console.log('todolistData', todolistData);
 
-  const onRemoveTask = (id: string, todolistId: string) => {
+  const removeTask = (id: string, todolistId: string) => {
     tasksData[todolistId] = tasksData[todolistId].filter((item) => item.id !== id);
     setTasksData({ ...tasksData });
   };
@@ -85,7 +85,7 @@ const App: FC = () => {
             id={todolist.id}
             title={todolist.title}
             todolistItemData={tasksForTodolist}
-            onRemoveTask={onRemoveTask}
+            removeTask={removeTask}
             onChangeFilter={onChangeFilter}
             addTask={addTask}
             onChangeStatus={onChangeStatus}

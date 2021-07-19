@@ -9,6 +9,7 @@ import {
   ChangeTodolistFilterActionType,
   ChangeTodolistTitleActionType,
 } from './types/todolists-actions.type';
+import { v1 } from 'uuid';
 
 export const RemoveTodolistAC = (todolistId: string): RemoveTodolistActionType => ({
   type: REMOVE_TODOLIST,
@@ -17,7 +18,7 @@ export const RemoveTodolistAC = (todolistId: string): RemoveTodolistActionType =
 
 export const addTodolistAC = (newTodolistTitle: string): AddTodolistActionType => ({
   type: ADD_TODOLIST,
-  payload: newTodolistTitle,
+  payload: { newTodolistTitle: newTodolistTitle, todolistID: v1() },
 });
 
 export const changeTodolistTitleAC = (

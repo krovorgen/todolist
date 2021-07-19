@@ -19,7 +19,11 @@ export const todolistsReducer = (
     }
 
     case ADD_TODOLIST: {
-      let newTodolist: TodolistDataType = { id: v1(), title: action.payload, filter: 'all' };
+      let newTodolist: TodolistDataType = {
+        id: action.payload.todolistID,
+        title: action.payload.newTodolistTitle,
+        filter: 'all',
+      };
       return [...state, newTodolist];
     }
 

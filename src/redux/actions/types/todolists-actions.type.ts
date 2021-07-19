@@ -12,7 +12,7 @@ export type RemoveTodolistActionType = {
 
 export type AddTodolistActionType = {
   type: typeof ADD_TODOLIST;
-  payload: string;
+  payload: { newTodolistTitle: string; todolistID: string };
 };
 
 export type ChangeTodolistTitleActionType = {

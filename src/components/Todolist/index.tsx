@@ -10,7 +10,7 @@ const Todolist: FC<ITodolistProps> = ({
   id,
   title,
   todolistItemData,
-  onRemoveTask,
+  removeTask,
   onChangeFilter,
   addTask,
   onChangeStatus,
@@ -45,7 +45,7 @@ const Todolist: FC<ITodolistProps> = ({
       <AddItemForm callback={addTaskHandler} />
       <ul>
         {todolistItemData.map((todolist) => {
-          const onRemoveHandler = () => onRemoveTask(todolist.id, id);
+          const onRemoveHandler = () => removeTask(todolist.id, id);
           const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
             onChangeStatus(todolist.id, e.currentTarget.checked, id);
           };
