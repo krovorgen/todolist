@@ -28,13 +28,15 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
     case REMOVE_TASK:
       return {
         ...state,
-        [action.payload.todolistID]: state[action.payload.todolistID].filter(
+        [action.payload.todolistID]: [...state[action.payload.todolistID]].filter(
           (item) => item.id !== action.payload.id
         ),
       };
 
     case CHANGE_STATUS: {
-      let task = state[action.payload.todolistID].find((item) => item.id === action.payload.id);
+      let task = [...state[action.payload.todolistID]].find(
+        (item) => item.id === action.payload.id
+      );
       if (task) {
         task.checked = action.payload.status;
       }
@@ -42,7 +44,9 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
     }
 
     case CHANGE_TASK_TEXT: {
-      let task = state[action.payload.todolistID].find((item) => item.id === action.payload.id);
+      let task = [...state[action.payload.todolistID]].find(
+        (item) => item.id === action.payload.id
+      );
       if (task) {
         task.title = action.payload.newValue;
       }

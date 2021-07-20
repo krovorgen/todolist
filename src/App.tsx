@@ -20,23 +20,7 @@ import {
 const App: FC = () => {
   const dispatch = useDispatch();
 
-  const { todolists, tasks } = useSelector((state: RootStateType) => state);
-
-  const addTask = (inputValue: string, todolistId: string) => {
-    dispatch(addTaskAC(inputValue, todolistId));
-  };
-
-  const removeTask = (id: string, todolistId: string) => {
-    dispatch(removeTaskAC(id, todolistId));
-  };
-
-  const onChangeStatus = (id: string, status: boolean, todolistId: string) => {
-    dispatch(changeStatusAC(id, status, todolistId));
-  };
-
-  const onChangeTaskText = (id: string, newValue: string, todolistId: string) => {
-    dispatch(changeTaskTextAC(id, newValue, todolistId));
-  };
+  const { todolists } = useSelector((state: RootStateType) => state);
 
   const onChangeFilter = (filterValue: FilterType, id: string) => {
     dispatch(changeTodolistFilterAC(id, filterValue));
@@ -54,26 +38,14 @@ const App: FC = () => {
     <>
       <AddItemForm callback={addTodolist} />
       {todolists.map((todolist) => {
-        let tasksForTodolist = tasks[todolist.id];
-        if (todolist.filter === 'active') {
-          tasksForTodolist = tasksForTodolist.filter((item) => !item.checked);
-        }
-        if (todolist.filter === 'completed') {
-          tasksForTodolist = tasksForTodolist.filter((item) => item.checked);
-        }
         return (
           <Todolist
             key={todolist.id}
             id={todolist.id}
             title={todolist.title}
-            todolistItemData={tasksForTodolist}
-            removeTask={removeTask}
             onChangeFilter={onChangeFilter}
-            addTask={addTask}
-            onChangeStatus={onChangeStatus}
             filter={todolist.filter}
             removeTodolist={removeTodolist}
-            onChangeTaskText={onChangeTaskText}
             onChangeTitleTodolist={onChangeTitleTodolist}
           />
         );

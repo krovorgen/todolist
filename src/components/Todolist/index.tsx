@@ -5,20 +5,31 @@ import AddItemForm from '../AddItemForm';
 
 import styles from './style.module.scss';
 import EditableSpan from '../EditableSpan';
+import {
+  addTaskAC,
+  changeStatusAC,
+  changeTaskTextAC,
+  removeTaskAC,
+} from '../../redux/actions/tasks-actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootStateType } from '../../types';
 
 const Todolist: FC<ITodolistProps> = ({
   id,
   title,
-  todolistItemData,
-  removeTask,
   onChangeFilter,
-  addTask,
-  onChangeStatus,
   filter,
   removeTodolist,
-  onChangeTaskText,
   onChangeTitleTodolist,
 }) => {
+  const dispatch = useDispatch();
+
+  const tasks = useSelector((state: RootStateType) => state.tasks[id]);
+
+  const addTaskHandler = (title: string) => {
+    dispatch(addTaskAC(title, id));
+  };
+
   const onAllClickHandler = () => onChangeFilter('all', id);
   const onActiveClickHandler = () => onChangeFilter('active', id);
   const onCompletedClickHandler = () => onChangeFilter('completed', id);
@@ -27,13 +38,17 @@ const Todolist: FC<ITodolistProps> = ({
     removeTodolist(id);
   };
 
-  const addTaskHandler = (title: string) => {
-    addTask(title, id);
-  };
-
   const editTitleTodolist = (newValue: string) => {
     onChangeTitleTodolist(newValue, id);
   };
+
+  let tasksForTodolist = tasks;
+  if (filter === 'active') {
+    tasksForTodolist = tasksForTodolist.filter((item) => !item.checked);
+  }
+  if (filter === 'completed') {
+    tasksForTodolist = tasksForTodolist.filter((item) => item.checked);
+  }
 
   return (
     <div>
@@ -44,13 +59,13 @@ const Todolist: FC<ITodolistProps> = ({
 
       <AddItemForm callback={addTaskHandler} />
       <ul>
-        {todolistItemData.map((todolist) => {
-          const onRemoveHandler = () => removeTask(todolist.id, id);
+        {tasksForTodolist.map((todolist) => {
+          const onRemoveHandler = () => dispatch(removeTaskAC(todolist.id, id));
           const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            onChangeStatus(todolist.id, e.currentTarget.checked, id);
+            dispatch(changeStatusAC(todolist.id, e.currentTarget.checked, id));
           };
           const newEditableValue = (newValue: string) => {
-            onChangeTaskText(todolist.id, newValue, id);
+            dispatch(changeTaskTextAC(todolist.id, newValue, id));
           };
           return (
             <li key={todolist.id} className={todolist.checked ? styles['is-done'] : ''}>
