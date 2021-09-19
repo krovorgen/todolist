@@ -5,12 +5,6 @@ import { Todolist } from './components';
 import { FilterType, RootStateType } from './types';
 import AddItemForm from './components/AddItemForm';
 import {
-  addTaskAC,
-  changeStatusAC,
-  changeTaskTextAC,
-  removeTaskAC,
-} from './redux/actions/tasks-actions';
-import {
   addTodolistAC,
   changeTodolistFilterAC,
   changeTodolistTitleAC,
