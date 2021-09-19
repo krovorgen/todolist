@@ -11,7 +11,7 @@ import {
   RemoveTodolistAC,
 } from './redux/actions/todolists-actions';
 
-const App: FC = () => {
+export const App: FC = () => {
   const dispatch = useDispatch();
 
   const { todolists } = useSelector((state: RootStateType) => state);
@@ -47,5 +47,3 @@ const App: FC = () => {
     </>
   );
 };
-
-export default App;
