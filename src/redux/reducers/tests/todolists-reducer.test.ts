@@ -5,7 +5,7 @@ import {
   addTodolistAC,
   changeTodolistFilterAC,
   changeTodolistTitleAC,
-  RemoveTodolistAC,
+  removeTodolistAC,
 } from '../../actions/todolists-actions';
 import {
   ADD_TODOLIST,
@@ -27,7 +27,7 @@ test('correct todolist should be removed', () => {
     { id: todolistId2, title: 'What to buy', filter: 'all' },
   ];
 
-  const action: RemoveTodolistActionType = RemoveTodolistAC(todolistId1);
+  const action: RemoveTodolistActionType = removeTodolistAC(todolistId1);
 
   const endState = todolistsReducer(startState, action);
 

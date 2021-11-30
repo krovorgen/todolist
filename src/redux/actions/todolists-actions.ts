@@ -11,7 +11,7 @@ import {
 } from './types/todolists-actions.type';
 import { v1 } from 'uuid';
 
-export const RemoveTodolistAC = (todolistId: string): RemoveTodolistActionType => ({
+export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => ({
   type: REMOVE_TODOLIST,
   payload: todolistId,
 });

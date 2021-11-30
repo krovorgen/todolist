@@ -6,7 +6,7 @@ import {
 } from '../../actions/tasks-actions';
 import { AllTasksType } from '../../../types';
 import { tasksReducer } from '../tasks-reducer';
-import { addTodolistAC, RemoveTodolistAC } from '../../actions/todolists-actions';
+import { addTodolistAC, removeTodolistAC } from '../../actions/todolists-actions';
 
 test('correct task should be deleted from correct array', () => {
   const startState: AllTasksType = {
@@ -154,7 +154,7 @@ test('property with todolistId should be deleted', () => {
     ],
   };
 
-  const action = RemoveTodolistAC('todolistId2');
+  const action = removeTodolistAC('todolistId2');
 
   const endState = tasksReducer(startState, action);
 

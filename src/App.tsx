@@ -1,15 +1,16 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Todolist } from './components';
 import { FilterType, RootStateType } from './types';
-import AddItemForm from './components/AddItemForm';
 import {
   addTodolistAC,
   changeTodolistFilterAC,
   changeTodolistTitleAC,
-  RemoveTodolistAC,
+  removeTodolistAC,
 } from './redux/actions/todolists-actions';
+import { AddItemForm } from './components/AddItemForm';
+import { Todolist } from './components/Todolist';
+
 
 export const App: FC = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ export const App: FC = () => {
     dispatch(changeTodolistTitleAC(todolistId, newValue));
   };
 
-  const removeTodolist = (id: string) => dispatch(RemoveTodolistAC(id));
+  const removeTodolist = (id: string) => dispatch(removeTodolistAC(id));
 
   const addTodolist = (title: string) => dispatch(addTodolistAC(title));
 
