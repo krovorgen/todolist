@@ -1,11 +1,6 @@
 @import "./src/scss/variables";
 @import "./src/scss/mixins";
 
-$sm-height: 32px;
-$md-height: 40px;
-$lg-height: 50px;
-$xl-height: 60px;
-
 .button {
   box-sizing: border-box;
   bottom: 0;
@@ -38,33 +33,33 @@ $xl-height: 60px;
 .xs {
   padding: 0 16px;
   min-width: 80px;
-  min-height: 32px;
+  min-height: $xs-height;
   font-size: 14px;
 
   &.iconOnly {
-    min-width: 32px;
+    min-width: $xs-height;
   }
 }
 
 .sm {
   padding: 0 20px;
   min-width: 88px;
-  min-height: 40px;
+  min-height: $sm-height;
   font-size: 14px;
 
   &.iconOnly {
-    min-width: 40px;
+    min-width: $sm-height;
   }
 }
 
 .md {
   padding: 0 24px;
   min-width: 104px;
-  min-height: 48px;
+  min-height: $md-height;
   font-size: 16px;
 
   &.iconOnly {
-    min-width: 48px;
+    min-width: $md-height;
   }
 }
 
