@@ -1,0 +1,47 @@
+@import "./src/scss/variables";
+@import "./src/scss/mixins";
+
+.checkbox {
+  cursor: pointer;
+
+  &__input:checked + .checkbox__text::after {
+    opacity: 1;
+  }
+
+  &__input {
+    @include visually-hidden;
+  }
+
+  &__text {
+    position: relative;
+    padding-left: 22px;
+    user-select: none;
+
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      transition: opacity 0.5s;
+    }
+
+    &::before {
+      z-index: 1;
+      background-color: #fff;
+    }
+
+    &::after {
+      z-index: 2;
+      opacity: 0;
+      background-image: url("/images/check.svg");
+      background-position: center;
+      background-size: 12px 9px;
+      background-repeat: no-repeat;
+      background-color: #57a216;
+    }
+  }
+}

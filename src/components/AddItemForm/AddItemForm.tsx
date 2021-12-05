@@ -1,17 +1,19 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 
-import { Input } from '../Input';
-import { Button } from '../Button';
+import { Input } from '../atoms/Input';
+import { Button } from '../atoms/Button';
 
 import styles from './styles.module.scss';
+import cn from 'classnames';
 
 interface IAddItemFormProps {
   callback: (newTaskTitle: string) => void;
+  addClass?: string;
 }
 
 type ErrorValueType = string | null;
 
-export const AddItemForm: FC<IAddItemFormProps> = ({ callback }) => {
+export const AddItemForm: FC<IAddItemFormProps> = ({ callback, addClass }) => {
   const [error, setError] = useState<ErrorValueType>(null);
   const [newTaskTitle, setNewTaskTitle] = useState('');
 
@@ -35,7 +37,7 @@ export const AddItemForm: FC<IAddItemFormProps> = ({ callback }) => {
   };
 
   return (
-    <div className={styles.wrap}>
+    <div className={cn(styles.wrap, addClass)}>
       <Input
         error={error}
         onChange={onChangeInputValue}

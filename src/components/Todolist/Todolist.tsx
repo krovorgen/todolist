@@ -10,6 +10,7 @@ import {
 import { FilterType, RootStateType } from '../../types';
 import { EditableSpan } from '../EditableSpan';
 import { AddItemForm } from '../AddItemForm';
+import { Button } from '../atoms/Button';
 
 import styles from './style.module.scss';
 
@@ -61,7 +62,7 @@ export const Todolist: FC<ITodolistProps> = ({
   return (
     <div>
       <h3>
-        <EditableSpan title={title} newEditableValue={editTitleTodolist} />{' '}
+        <EditableSpan title={title} newEditableValue={editTitleTodolist} />
         <button onClick={removeTodolistHandler}>x</button>
       </h3>
 
@@ -85,24 +86,15 @@ export const Todolist: FC<ITodolistProps> = ({
         })}
       </ul>
       <div>
-        <button
-          onClick={onAllClickHandler}
-          className={filter === 'all' ? styles['button-filter--active'] : ''}
-        >
+        <Button onClick={onAllClickHandler} active={filter === 'all'}>
           All
-        </button>
-        <button
-          onClick={onActiveClickHandler}
-          className={filter === 'active' ? styles['button-filter--active'] : ''}
-        >
+        </Button>
+        <Button onClick={onActiveClickHandler} active={filter === 'active'}>
           Active
-        </button>
-        <button
-          onClick={onCompletedClickHandler}
-          className={filter === 'completed' ? styles['button-filter--active'] : ''}
-        >
+        </Button>
+        <Button onClick={onCompletedClickHandler} active={filter === 'completed'}>
           Completed
-        </button>
+        </Button>
       </div>
     </div>
   );

@@ -66,3 +66,12 @@
 .iconOnly {
   padding: 0;
 }
+
+.active {
+  color: #0b1f35;
+  background-color: #dbdee1;
+
+  &:hover {
+    background-color: #ccced1;
+  }
+}

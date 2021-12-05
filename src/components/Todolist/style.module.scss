@@ -1,8 +1,5 @@
-.button-filter {
-  &--active {
-    background-color: #ccc;
-  }
-}
+@import "./src/scss/variables";
+@import "./src/scss/mixins";
 
 .is-done span {
   color: #ccc;

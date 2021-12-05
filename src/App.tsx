@@ -11,6 +11,8 @@ import {
 import { AddItemForm } from './components/AddItemForm';
 import { Todolist } from './components/Todolist';
 
+import styles from './styles.module.scss';
+
 export const App: FC = () => {
   const dispatch = useDispatch();
 
@@ -29,8 +31,8 @@ export const App: FC = () => {
   const addTodolist = (title: string) => dispatch(addTodolistAC(title));
 
   return (
-    <>
-      <AddItemForm callback={addTodolist} />
+    <div className={`container`}>
+      <AddItemForm callback={addTodolist} addClass={styles.form} />
       {todolists.map((todolist) => {
         return (
           <Todolist
@@ -44,6 +46,6 @@ export const App: FC = () => {
           />
         );
       })}
-    </>
+    </div>
   );
 };

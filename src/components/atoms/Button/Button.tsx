@@ -8,6 +8,7 @@ type ButtonPropsType = React.HTMLAttributes<HTMLAnchorElement | HTMLButtonElemen
 export interface IButtonProps extends ButtonPropsType {
   addClass?: string;
   sizes?: 'xs' | 'sm' | 'md';
+  active?: boolean;
   variant?: 'iconOnly';
 }
 
@@ -15,6 +16,7 @@ export const Button: FC<IButtonProps> = ({
   addClass,
   sizes = 'xs',
   variant,
+  active,
   children,
   ...props
 }) => {
@@ -23,6 +25,7 @@ export const Button: FC<IButtonProps> = ({
     [styles.sm]: sizes === 'sm',
     [styles.md]: sizes === 'md',
     [styles.iconOnly]: variant === 'iconOnly',
+    [styles.active]: active,
   };
 
   return (
