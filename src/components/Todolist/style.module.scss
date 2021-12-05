@@ -1,6 +1,47 @@
 @import "./src/scss/variables";
 @import "./src/scss/mixins";
 
-.is-done span {
-  color: #ccc;
+.todolist {
+  max-width: 400px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.addTodolist {
+  margin-bottom: 8px;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+}
+
+.items {
+  margin-bottom: 16px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-bottom: 8px;
+  }
+}
+
+.deleteItem {
+  margin-left: auto;
+}
+
+.checkbox {
+  width: 100%;
+
+  &.checked {
+    color: #ccc;
+  }
 }

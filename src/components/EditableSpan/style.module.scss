@@ -1,6 +1,12 @@
 @import "./src/scss/variables";
 @import "./src/scss/mixins";
 
-.is-done {
-  color: #ccc;
+.text {
+  width: 100%;
+  font-size: 20px;
+}
+
+.input {
+  margin-right: 8px;
+  width: 100%;
 }

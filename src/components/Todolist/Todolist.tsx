@@ -13,6 +13,8 @@ import { AddItemForm } from '../AddItemForm';
 import { Button } from '../atoms/Button';
 
 import styles from './style.module.scss';
+import { Checkbox } from '../atoms/Checkbox';
+import cn from 'classnames';
 
 export interface ITodolistProps {
   id: string;
@@ -60,14 +62,13 @@ export const Todolist: FC<ITodolistProps> = ({
   }
 
   return (
-    <div>
-      <h3>
+    <li className={styles.todolist}>
+      <div className={styles.head}>
         <EditableSpan title={title} newEditableValue={editTitleTodolist} />
-        <button onClick={removeTodolistHandler}>x</button>
-      </h3>
-
-      <AddItemForm callback={addTaskHandler} />
-      <ul>
+        <Button onClick={removeTodolistHandler} variant="iconOnly" icon="cross" sizes="sm" />
+      </div>
+      <AddItemForm callback={addTaskHandler} addClass={styles.addTodolist} />
+      <ul className={styles.items}>
         {tasksForTodolist.map((todolist) => {
           const onRemoveHandler = () => dispatch(removeTaskAC(todolist.id, id));
           const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -77,25 +78,35 @@ export const Todolist: FC<ITodolistProps> = ({
             dispatch(changeTaskTextAC(todolist.id, newValue, id));
           };
           return (
-            <li key={todolist.id} className={todolist.checked ? styles['is-done'] : ''}>
-              <input onChange={onChangeStatusHandler} type="checkbox" checked={todolist.checked} />
-              <EditableSpan title={todolist.title} newEditableValue={newEditableValue} />
-              <button onClick={onRemoveHandler}>x</button>
+            <li className={cn(styles.item)} key={todolist.id}>
+              <Checkbox
+                onChange={onChangeStatusHandler}
+                checked={todolist.checked}
+                addClass={cn(styles.checkbox, { [styles.checked]: todolist.checked })}
+              >
+                <EditableSpan title={todolist.title} newEditableValue={newEditableValue} />
+              </Checkbox>
+              <Button
+                addClass={styles.deleteItem}
+                onClick={onRemoveHandler}
+                variant="iconOnly"
+                icon="cross"
+              />
             </li>
           );
         })}
       </ul>
-      <div>
-        <Button onClick={onAllClickHandler} active={filter === 'all'}>
+      <div className={styles.navigation}>
+        <Button onClick={onAllClickHandler} sizes="sm" active={filter === 'all'}>
           All
         </Button>
-        <Button onClick={onActiveClickHandler} active={filter === 'active'}>
+        <Button onClick={onActiveClickHandler} sizes="sm" active={filter === 'active'}>
           Active
         </Button>
-        <Button onClick={onCompletedClickHandler} active={filter === 'completed'}>
+        <Button onClick={onCompletedClickHandler} sizes="sm" active={filter === 'completed'}>
           Completed
         </Button>
       </div>
-    </div>
+    </li>
   );
 };

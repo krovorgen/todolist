@@ -46,9 +46,13 @@ export const AddItemForm: FC<IAddItemFormProps> = ({ callback, addClass }) => {
         sizes="sm"
         addClass={styles.input}
       />
-      <Button onClick={onAddTask} variant="iconOnly" sizes="sm" addClass={styles.button}>
-        +
-      </Button>
+      <Button
+        onClick={onAddTask}
+        variant="iconOnly"
+        sizes="sm"
+        icon="plus"
+        addClass={styles.button}
+      />
     </div>
   );
 };

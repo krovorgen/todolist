@@ -33,19 +33,21 @@ export const App: FC = () => {
   return (
     <div className={`container`}>
       <AddItemForm callback={addTodolist} addClass={styles.form} />
-      {todolists.map((todolist) => {
-        return (
-          <Todolist
-            key={todolist.id}
-            id={todolist.id}
-            title={todolist.title}
-            onChangeFilter={onChangeFilter}
-            filter={todolist.filter}
-            removeTodolist={removeTodolist}
-            onChangeTitleTodolist={onChangeTitleTodolist}
-          />
-        );
-      })}
+      <ul className={styles.list}>
+        {todolists.map((todolist) => {
+          return (
+            <Todolist
+              key={todolist.id}
+              id={todolist.id}
+              title={todolist.title}
+              onChangeFilter={onChangeFilter}
+              filter={todolist.filter}
+              removeTodolist={removeTodolist}
+              onChangeTitleTodolist={onChangeTitleTodolist}
+            />
+          );
+        })}
+      </ul>
     </div>
   );
 };

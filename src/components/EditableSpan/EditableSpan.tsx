@@ -1,5 +1,9 @@
 import React, { ChangeEvent, FC, useState } from 'react';
 
+import { Input } from '../atoms/Input';
+
+import styles from './style.module.scss';
+
 export interface IEditableSpanPropsType {
   title: string;
   newEditableValue: (newValue: string) => void;
@@ -26,14 +30,18 @@ export const EditableSpan: FC<IEditableSpanPropsType> = ({ title, newEditableVal
   return (
     <>
       {statusEditable ? (
-        <input
+        <Input
+          addClass={styles.input}
           value={inputValue}
           onChange={onChangeTitleHandler}
           onBlur={activeViewMode}
           autoFocus
+          sizes="sm"
         />
       ) : (
-        <span onDoubleClick={activeEditMode}>{title}</span>
+        <span onDoubleClick={activeEditMode} className={styles.text}>
+          {title}
+        </span>
       )}
     </>
   );

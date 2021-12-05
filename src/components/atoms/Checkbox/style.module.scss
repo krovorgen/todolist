@@ -2,14 +2,16 @@
 @import "./src/scss/mixins";
 
 .checkbox {
+  display: flex;
+  align-items: center;
   cursor: pointer;
-
-  &__input:checked + .checkbox__text::after {
-    opacity: 1;
-  }
 
   &__input {
     @include visually-hidden;
+
+    &:checked + .checkbox__text::after {
+      opacity: 1;
+    }
   }
 
   &__text {
@@ -23,10 +25,11 @@
       content: "";
       position: absolute;
       left: 0;
-      bottom: 0;
+      top: 50%;
       width: 16px;
       height: 16px;
       border-radius: 3px;
+      transform: translateY(-50%);
       transition: opacity 0.5s;
     }
 

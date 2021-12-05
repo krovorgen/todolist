@@ -1,0 +1,8 @@
+<svg width="0" height="0" class="hidden">
+  <symbol xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 96 96" id="cross" fill="currentColor">
+    <path d="m53.657 48 25.171-25.172a4 4 0 1 0-5.656-5.656L48 42.343 22.829 17.172a4 4 0 0 0-5.657 5.656L42.344 48 17.172 73.172a4 4 0 1 0 5.657 5.656L48 53.657l25.172 25.171C73.953 79.609 74.977 80 76 80s2.048-.391 2.828-1.172a4 4 0 0 0 0-5.656L53.657 48z"/>
+  </symbol>
+  <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 13" id="plus" fill="currentColor">
+    <path d="M7 5.229h4.56v1.965H7v5.166H4.91V7.194H.352V5.23h4.56V.456H7V5.23z"/>
+  </symbol>
+</svg>
