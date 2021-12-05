@@ -15,6 +15,7 @@
   &__text {
     position: relative;
     padding-left: 22px;
+    font-size: 16px;
     user-select: none;
 
     &::before,
@@ -31,7 +32,9 @@
 
     &::before {
       z-index: 1;
+      border: 1px solid #6d7986;
       background-color: #fff;
+      transition: background-color 0.3s;
     }
 
     &::after {
@@ -41,7 +44,13 @@
       background-position: center;
       background-size: 12px 9px;
       background-repeat: no-repeat;
-      background-color: #57a216;
+      background-color: #ef3124;
+    }
+
+    &:hover {
+      &::before {
+        background-color: #b6bcc3;
+      }
     }
   }
 }
