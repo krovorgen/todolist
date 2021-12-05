@@ -1,31 +1,41 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import React, { FC } from 'react';
-import classNames from 'classnames';
+import React, { DetailedHTMLProps, FC, InputHTMLAttributes, useState } from 'react';
+import cn from 'classnames';
 
 import styles from './styles.module.scss';
 
-export type InputPropsType = React.HTMLAttributes<HTMLInputElement>;
+export type InputElementPropsType = DetailedHTMLProps<
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
 
-export interface IInputProps extends InputPropsType {
+export interface IInputProps {
   addClass?: string;
-  size?: 'xs' | 'sm' | 'md';
+  sizes?: 'xs' | 'sm' | 'md';
+  error?: string | null;
 }
 
-export const Input: FC<IInputProps> = ({
+export const Input: FC<IInputProps & InputElementPropsType> = ({
   addClass,
-  size = 'xs',
+  sizes = 'xs',
+  error,
   children,
   ...props
 }) => {
+  const [focusInput, setFocusInput] = useState<boolean>(false);
   const appearances = {
-    [styles.xs]: size === 'xs',
-    [styles.sm]: size === 'sm',
-    [styles.md]: size === 'md',
+    [styles.xs]: sizes === 'xs',
+    [styles.sm]: sizes === 'sm',
+    [styles.md]: sizes === 'md',
   };
 
+  const focusHandler = () => setFocusInput((v) => !v);
+
   return (
-    <div className={styles.wrap}>
-      <input className={classNames(styles.input, addClass, appearances)} {...props} />
+    <div className={cn(styles.box, addClass)}>
+      <div className={cn(styles.wrap, { [styles.active]: focusInput, [styles.error]: error })}>
+        <input className={cn(styles.input, appearances)} onFocus={focusHandler} {...props} />
+      </div>
+      {error ? <p className={styles.textError}>{error}</p> : null}
     </div>
   );
 };

@@ -1,0 +1,11 @@
+@import "./src/scss/variables";
+@import "./src/scss/mixins";
+
+.wrap {
+  display: flex;
+  align-items: flex-start;
+}
+
+.input {
+  margin-right: 8px;
+}

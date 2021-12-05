@@ -7,21 +7,21 @@ type ButtonPropsType = React.HTMLAttributes<HTMLAnchorElement | HTMLButtonElemen
 
 export interface IButtonProps extends ButtonPropsType {
   addClass?: string;
-  size?: 'xs' | 'sm' | 'md';
+  sizes?: 'xs' | 'sm' | 'md';
   variant?: 'iconOnly';
 }
 
 export const Button: FC<IButtonProps> = ({
   addClass,
-  size = 'xs',
+  sizes = 'xs',
   variant,
   children,
   ...props
 }) => {
   const appearances = {
-    [styles.xs]: size === 'xs',
-    [styles.sm]: size === 'sm',
-    [styles.md]: size === 'md',
+    [styles.xs]: sizes === 'xs',
+    [styles.sm]: sizes === 'sm',
+    [styles.md]: sizes === 'md',
     [styles.iconOnly]: variant === 'iconOnly',
   };
 

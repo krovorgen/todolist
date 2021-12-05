@@ -1,6 +1,9 @@
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
 
-import styles from '../Todolist/style.module.scss';
+import { Input } from '../Input';
+import { Button } from '../Button';
+
+import styles from './styles.module.scss';
 
 interface IAddItemFormProps {
   callback: (newTaskTitle: string) => void;
@@ -32,17 +35,18 @@ export const AddItemForm: FC<IAddItemFormProps> = ({ callback }) => {
   };
 
   return (
-    <>
-      <div>
-        <input
-          className={error !== null ? styles['error__input'] : ''}
-          value={newTaskTitle}
-          onChange={onChangeInputValue}
-          onKeyPress={onEnterAddTask}
-        />
-        <button onClick={onAddTask}>+</button>
-      </div>
-      {error && <span className={styles['error__message']}>{error}</span>}
-    </>
+    <div className={styles.wrap}>
+      <Input
+        error={error}
+        onChange={onChangeInputValue}
+        onKeyPress={onEnterAddTask}
+        value={newTaskTitle}
+        sizes="sm"
+        addClass={styles.input}
+      />
+      <Button onClick={onAddTask} variant="iconOnly" sizes="sm" addClass={styles.button}>
+        +
+      </Button>
+    </div>
   );
 };

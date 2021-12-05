@@ -10,7 +10,6 @@ import {
 } from './redux/actions/todolists-actions';
 import { AddItemForm } from './components/AddItemForm';
 import { Todolist } from './components/Todolist';
-import { Input } from 'components/Input';
 
 export const App: FC = () => {
   const dispatch = useDispatch();
@@ -32,9 +31,6 @@ export const App: FC = () => {
   return (
     <>
       <AddItemForm callback={addTodolist} />
-      <Input size="xs" /> <br />
-      <Input size="sm" /> <br />
-      <Input size="md" />
       {todolists.map((todolist) => {
         return (
           <Todolist
