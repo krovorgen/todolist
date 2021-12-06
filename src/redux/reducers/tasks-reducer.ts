@@ -21,35 +21,33 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
       };
       return {
         ...state,
-        [action.payload.todolistID]: [...state[action.payload.todolistID], newTask],
+        [action.payload.todolistId]: [...state[action.payload.todolistId], newTask],
       };
     }
 
     case REMOVE_TASK:
       return {
         ...state,
-        [action.payload.todolistID]: [...state[action.payload.todolistID]].filter(
-          (item) => item.id !== action.payload.id
+        [action.payload.todolistId]: [...state[action.payload.todolistId]].filter(
+          (item) => item.id !== action.payload.taskId
         ),
       };
 
     case CHANGE_STATUS: {
-      let task = [...state[action.payload.todolistID]].find(
-        (item) => item.id === action.payload.id
-      );
-      if (task) {
-        task.checked = action.payload.status;
-      }
+      let todolistTasks = state[action.payload.todolistId];
+      let task = todolistTasks.find((t) => t.id === action.payload.taskId);
+      if (task) task.checked = action.payload.status;
+
+      state[action.payload.todolistId] = [...todolistTasks];
       return { ...state };
     }
 
     case CHANGE_TASK_TEXT: {
-      let task = [...state[action.payload.todolistID]].find(
-        (item) => item.id === action.payload.id
-      );
-      if (task) {
-        task.title = action.payload.newValue;
-      }
+      let todolistTasks = state[action.payload.todolistId];
+      let task = todolistTasks.find((t) => t.id === action.payload.taskId);
+      if (task) task.title = action.payload.newValue;
+
+      state[action.payload.todolistId] = [...todolistTasks];
       return { ...state };
     }
 

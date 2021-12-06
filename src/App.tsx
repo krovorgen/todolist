@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { FilterType, RootStateType } from './types';
@@ -15,20 +15,25 @@ import styles from './styles.module.scss';
 
 export const App: FC = () => {
   const dispatch = useDispatch();
-
   const { todolists } = useSelector((state: RootStateType) => state);
 
-  const onChangeFilter = (filterValue: FilterType, id: string) => {
-    dispatch(changeTodolistFilterAC(id, filterValue));
-  };
+  const onChangeFilter = useCallback(
+    (filterValue: FilterType, id: string) => {
+      dispatch(changeTodolistFilterAC(id, filterValue));
+    },
+    [dispatch]
+  );
 
-  const onChangeTitleTodolist = (newValue: string, todolistId: string) => {
-    dispatch(changeTodolistTitleAC(todolistId, newValue));
-  };
+  const onChangeTitleTodolist = useCallback(
+    (newValue: string, todolistId: string) => {
+      dispatch(changeTodolistTitleAC(todolistId, newValue));
+    },
+    [dispatch]
+  );
 
-  const removeTodolist = (id: string) => dispatch(removeTodolistAC(id));
+  const removeTodolist = useCallback((id: string) => dispatch(removeTodolistAC(id)), [dispatch]);
 
-  const addTodolist = (title: string) => dispatch(addTodolistAC(title));
+  const addTodolist = useCallback((title: string) => dispatch(addTodolistAC(title)), [dispatch]);
 
   return (
     <div className={`container`}>

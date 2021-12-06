@@ -7,22 +7,22 @@ export const CHANGE_TASK_TEXT = 'CHANGE-TASK-TEXT';
 
 export type AddTaskActionType = {
   type: typeof ADD_TASK;
-  payload: { inputValue: string; todolistID: string };
+  payload: { inputValue: string; todolistId: string };
 };
 
 export type RemoveTaskActionType = {
   type: typeof REMOVE_TASK;
-  payload: { id: string; todolistID: string };
+  payload: { taskId: string; todolistId: string };
 };
 
 export type changeStatusActionType = {
   type: typeof CHANGE_STATUS;
-  payload: { id: string; status: boolean; todolistID: string };
+  payload: { taskId: string; status: boolean; todolistId: string };
 };
 
 export type changeTaskTextActionType = {
   type: typeof CHANGE_TASK_TEXT;
-  payload: { id: string; newValue: string; todolistID: string };
+  payload: { taskId: string; newValue: string; todolistId: string };
 };
 
 export type TasksActionType =

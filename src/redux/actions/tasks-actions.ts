@@ -11,28 +11,28 @@ import {
 
 export const addTaskAC = (inputValue: string, todolistId: string): AddTaskActionType => ({
   type: ADD_TASK,
-  payload: { inputValue: inputValue, todolistID: todolistId },
+  payload: { inputValue, todolistId },
 });
 
-export const removeTaskAC = (id: string, todolistId: string): RemoveTaskActionType => ({
+export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => ({
   type: REMOVE_TASK,
-  payload: { id: id, todolistID: todolistId },
+  payload: { taskId, todolistId },
 });
 
 export const changeStatusAC = (
-  id: string,
+  taskId: string,
   status: boolean,
   todolistId: string
 ): changeStatusActionType => ({
   type: CHANGE_STATUS,
-  payload: { id: id, status: status, todolistID: todolistId },
+  payload: { taskId, status, todolistId },
 });
 
 export const changeTaskTextAC = (
-  id: string,
+  taskId: string,
   newValue: string,
   todolistId: string
 ): changeTaskTextActionType => ({
   type: CHANGE_TASK_TEXT,
-  payload: { id: id, newValue: newValue, todolistID: todolistId },
+  payload: { taskId, newValue, todolistId },
 });

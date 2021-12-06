@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react';
+import React, { ChangeEvent, FC, KeyboardEvent, memo, useState } from 'react';
 
 import { Input } from '../atoms/Input';
 import { Button } from '../atoms/Button';
@@ -13,14 +13,12 @@ interface IAddItemFormProps {
 
 type ErrorValueType = string | null;
 
-export const AddItemForm: FC<IAddItemFormProps> = ({ callback, addClass }) => {
+export const AddItemForm: FC<IAddItemFormProps> = memo(({ callback, addClass }) => {
   const [error, setError] = useState<ErrorValueType>(null);
   const [newTaskTitle, setNewTaskTitle] = useState('');
-
   const onChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
     setNewTaskTitle(e.currentTarget.value);
   };
-
   const onAddTask = () => {
     if (newTaskTitle.trim() !== '') {
       callback(newTaskTitle);
@@ -32,7 +30,7 @@ export const AddItemForm: FC<IAddItemFormProps> = ({ callback, addClass }) => {
   };
 
   const onEnterAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-    setError(null);
+    if (error !== null) setError(null);
     e.key === 'Enter' && onAddTask();
   };
 
@@ -55,4 +53,4 @@ export const AddItemForm: FC<IAddItemFormProps> = ({ callback, addClass }) => {
       />
     </div>
   );
-};
+});

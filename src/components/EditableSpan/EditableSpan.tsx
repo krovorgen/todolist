@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useState } from 'react';
+import React, { ChangeEvent, FC, memo, useState } from 'react';
 
 import { Input } from '../atoms/Input';
 
@@ -9,17 +9,18 @@ export interface IEditableSpanPropsType {
   newEditableValue: (newValue: string) => void;
 }
 
-export const EditableSpan: FC<IEditableSpanPropsType> = ({ title, newEditableValue }) => {
+export const EditableSpan: FC<IEditableSpanPropsType> = memo(({ title, newEditableValue }) => {
   const [statusEditable, setStatusEditable] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
 
   const activeEditMode = () => {
-    setStatusEditable(true);
+    setStatusEditable((v) => !v);
     setInputValue(title);
   };
+  console.log('EditableSpan');
 
   const activeViewMode = () => {
-    setStatusEditable(false);
+    setStatusEditable((v) => !v);
     newEditableValue(inputValue);
   };
 
@@ -45,4 +46,4 @@ export const EditableSpan: FC<IEditableSpanPropsType> = ({ title, newEditableVal
       )}
     </>
   );
-};
+});
