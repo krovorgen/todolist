@@ -1,5 +1,6 @@
-import React, { ChangeEvent, FC, useCallback } from 'react';
+import React, { ChangeEvent, FC, memo, useCallback } from 'react';
 import cn from 'classnames';
+import { useDispatch } from 'react-redux';
 
 import { Checkbox } from '../../atoms/Checkbox';
 import { EditableSpan } from '../../EditableSpan';
@@ -9,7 +10,6 @@ import {
   changeTaskTextAC,
   removeTaskAC,
 } from '../../../redux/actions/tasks-actions';
-import { useDispatch } from 'react-redux';
 import { TodolistItemData } from '../../../types';
 
 import styles from '../style.module.scss';
@@ -19,7 +19,7 @@ type TaskProps = {
   todolistId: string;
 };
 
-export const Task: FC<TaskProps> = ({ task, todolistId }) => {
+export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
   const dispatch = useDispatch();
 
   const onRemoveHandler = () => dispatch(removeTaskAC(task.id, todolistId));
@@ -34,6 +34,8 @@ export const Task: FC<TaskProps> = ({ task, todolistId }) => {
     },
     [dispatch, task.id, todolistId]
   );
+  console.log('Task');
+
   return (
     <li className={cn(styles.item)} key={task.id}>
       <Checkbox
@@ -51,4 +53,4 @@ export const Task: FC<TaskProps> = ({ task, todolistId }) => {
       />
     </li>
   );
-};
+});

@@ -17,7 +17,6 @@ export const EditableSpan: FC<IEditableSpanPropsType> = memo(({ title, newEditab
     setStatusEditable((v) => !v);
     setInputValue(title);
   };
-  console.log('EditableSpan');
 
   const activeViewMode = () => {
     setStatusEditable((v) => !v);

@@ -35,19 +35,17 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
 
     case CHANGE_STATUS: {
       let todolistTasks = state[action.payload.todolistId];
-      let task = todolistTasks.find((t) => t.id === action.payload.taskId);
-      if (task) task.checked = action.payload.status;
-
-      state[action.payload.todolistId] = [...todolistTasks];
+      state[action.payload.todolistId] = todolistTasks.map((tasks) =>
+        tasks.id === action.payload.taskId ? { ...tasks, checked: action.payload.status } : tasks
+      );
       return { ...state };
     }
 
     case CHANGE_TASK_TEXT: {
       let todolistTasks = state[action.payload.todolistId];
-      let task = todolistTasks.find((t) => t.id === action.payload.taskId);
-      if (task) task.title = action.payload.newValue;
-
-      state[action.payload.todolistId] = [...todolistTasks];
+      state[action.payload.todolistId] = todolistTasks.map((tasks) =>
+        tasks.id === action.payload.taskId ? { ...tasks, title: action.payload.newValue } : tasks
+      );
       return { ...state };
     }
 
