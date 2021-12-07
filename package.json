@@ -19,7 +19,7 @@
     "redux": "^4.1.0",
     "typescript": "^4.1.2",
     "uuid": "^8.3.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "2.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -61,16 +61,16 @@
     ]
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.4.2",
-    "@storybook/addon-essentials": "^6.4.2",
-    "@storybook/addon-links": "^6.4.2",
-    "@storybook/node-logger": "^6.4.2",
+    "@storybook/addon-actions": "^6.4.8",
+    "@storybook/addon-essentials": "^6.4.8",
+    "@storybook/addon-links": "^6.4.8",
+    "@storybook/node-logger": "^6.4.8",
     "@storybook/preset-create-react-app": "^3.2.0",
-    "@storybook/react": "^6.4.2",
+    "@storybook/react": "^6.4.8",
     "classnames": "^2.3.1",
     "gh-pages": "^3.2.3",
     "node-sass": "^6.0.0",
-    "prettier": "2.3.0",
+    "prettier": "2.5.1",
     "stylelint": "^13.13.1",
     "stylelint-declaration-block-no-ignored-properties": "^2.3.0",
     "stylelint-order": "^4.1.0",
