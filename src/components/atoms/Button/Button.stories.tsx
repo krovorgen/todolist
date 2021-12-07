@@ -8,7 +8,7 @@ export default {
   title: 'Components/Button',
   component: Button,
   argTypes: {
-    size: {
+    sizes: {
       options: ['xs', 'sm', 'md'],
       control: { type: 'select' },
     },

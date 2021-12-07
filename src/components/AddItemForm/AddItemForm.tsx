@@ -1,19 +1,19 @@
 import React, { ChangeEvent, FC, KeyboardEvent, memo, useState } from 'react';
+import cn from 'classnames';
 
 import { Input } from '../atoms/Input';
 import { Button } from '../atoms/Button';
 
 import styles from './styles.module.scss';
-import cn from 'classnames';
 
-interface IAddItemFormProps {
+export type AddItemFormProps = {
   callback: (newTaskTitle: string) => void;
   addClass?: string;
-}
+};
 
 type ErrorValueType = string | null;
 
-export const AddItemForm: FC<IAddItemFormProps> = memo(({ callback, addClass }) => {
+export const AddItemForm: FC<AddItemFormProps> = memo(({ callback, addClass }) => {
   const [error, setError] = useState<ErrorValueType>(null);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const onChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {

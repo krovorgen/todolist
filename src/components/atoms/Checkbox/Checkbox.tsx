@@ -8,7 +8,7 @@ type DefaultInputPropsType = DetailedHTMLProps<
   HTMLInputElement
 >;
 
-type SuperCheckboxPropsType = DefaultInputPropsType & {
+export type SuperCheckboxPropsType = DefaultInputPropsType & {
   onChangeChecked?: (checked: boolean) => void;
   spanClassName?: string;
   addClass?: string;

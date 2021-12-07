@@ -14,7 +14,7 @@ import { TodolistItemData } from '../../../types';
 
 import styles from '../style.module.scss';
 
-type TaskProps = {
+export type TaskProps = {
   task: TodolistItemData;
   todolistId: string;
 };
