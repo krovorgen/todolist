@@ -1,18 +1,12 @@
-import React, { ChangeEvent, FC, memo, useCallback } from 'react';
+import React, { FC, memo, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import cn from 'classnames';
 
-import {
-  addTaskAC,
-  changeStatusAC,
-  changeTaskTextAC,
-  removeTaskAC,
-} from '../../redux/actions/tasks-actions';
+import { addTaskAC } from '../../redux/actions/tasks-actions';
 import { FilterType, RootStateType } from '../../types';
 import { EditableSpan } from '../EditableSpan';
 import { AddItemForm } from '../AddItemForm';
 import { Button } from '../atoms/Button';
-import { Checkbox } from '../atoms/Checkbox';
+import { Task } from './Task';
 
 import styles from './style.module.scss';
 
@@ -76,30 +70,7 @@ export const Todolist: FC<ITodolistProps> = memo(
         <AddItemForm callback={addTaskHandler} addClass={styles.addTodolist} />
         <ul className={styles.items}>
           {tasksForTodolist.map((task) => {
-            const onRemoveHandler = () => dispatch(removeTaskAC(task.id, id));
-            const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
-              dispatch(changeStatusAC(task.id, e.currentTarget.checked, id));
-            };
-            const newEditableValue = (newValue: string) => {
-              dispatch(changeTaskTextAC(task.id, newValue, id));
-            };
-            return (
-              <li className={cn(styles.item)} key={task.id}>
-                <Checkbox
-                  onChange={onChangeStatusHandler}
-                  checked={task.checked}
-                  addClass={cn(styles.checkbox, { [styles.checked]: task.checked })}
-                >
-                  <EditableSpan title={task.title} newEditableValue={newEditableValue} />
-                </Checkbox>
-                <Button
-                  addClass={styles.deleteItem}
-                  onClick={onRemoveHandler}
-                  variant="iconOnly"
-                  icon="cross"
-                />
-              </li>
-            );
+            return <Task task={task} todolistId={id} />;
           })}
         </ul>
         <div className={styles.navigation}>
