@@ -70,7 +70,7 @@ export const Todolist: FC<ITodolistProps> = memo(
         <AddItemForm callback={addTaskHandler} addClass={styles.addTodolist} />
         <ul className={styles.items}>
           {tasksForTodolist.map((task) => {
-            return <Task task={task} todolistId={id} />;
+            return <Task key={task.id} task={task} todolistId={id} />;
           })}
         </ul>
         <div className={styles.navigation}>
