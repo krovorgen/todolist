@@ -7,16 +7,7 @@ import {
   changeTodolistTitleAC,
   removeTodolistAC,
 } from '../../actions/todolists-actions';
-import {
-  ADD_TODOLIST,
-  AddTodolistActionType,
-  CHANGE_TODOLIST_FILTER,
-  CHANGE_TODOLIST_TITLE,
-  ChangeTodolistFilterActionType,
-  ChangeTodolistTitleActionType,
-  REMOVE_TODOLIST,
-  RemoveTodolistActionType,
-} from '../../actions/types/todolists-actions.type';
+import { RemoveTodolistActionType } from '../../actions/types/todolists-actions.type';
 
 test('correct todolist should be removed', () => {
   let todolistId1 = v1();

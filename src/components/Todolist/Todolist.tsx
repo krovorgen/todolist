@@ -85,29 +85,31 @@ export const Todolist: FC<ITodolistProps> = memo(
             return <Task key={task.id} task={task} todolistId={id} />;
           })}
         </ul>
-        <div className={styles.navigation}>
-          <Button
-            onClick={onAllClickHandler}
-            size="xs"
-            view={filter === 'all' ? 'primary' : 'secondary'}
-          >
-            All
-          </Button>
-          <Button
-            onClick={onActiveClickHandler}
-            size="xs"
-            view={filter === 'active' ? 'primary' : 'secondary'}
-          >
-            Active
-          </Button>
-          <Button
-            onClick={onCompletedClickHandler}
-            size="xs"
-            view={filter === 'completed' ? 'primary' : 'secondary'}
-          >
-            Completed
-          </Button>
-        </div>
+        {tasksForTodolist.length !== 0 && (
+          <div className={styles.navigation}>
+            <Button
+              onClick={onAllClickHandler}
+              size="xs"
+              view={filter === 'all' ? 'primary' : 'secondary'}
+            >
+              All
+            </Button>
+            <Button
+              onClick={onActiveClickHandler}
+              size="xs"
+              view={filter === 'active' ? 'primary' : 'secondary'}
+            >
+              Active
+            </Button>
+            <Button
+              onClick={onCompletedClickHandler}
+              size="xs"
+              view={filter === 'completed' ? 'primary' : 'secondary'}
+            >
+              Completed
+            </Button>
+          </div>
+        )}
       </li>
     );
   }

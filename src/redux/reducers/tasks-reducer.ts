@@ -1,19 +1,13 @@
 import { AllTasksType, TodolistItemData } from '../../types';
-import {
-  ADD_TASK,
-  CHANGE_STATUS,
-  CHANGE_TASK_TEXT,
-  REMOVE_TASK,
-  TasksActionType,
-} from '../actions/types/tasks-actions.type';
+import { TasksActionsType, TasksActionType } from '../actions/types/tasks-actions.type';
 import { v1 } from 'uuid';
-import { ADD_TODOLIST, REMOVE_TODOLIST } from '../actions/types/todolists-actions.type';
+import { TodolistsActionsType } from '../actions/types/todolists-actions.type';
 
 const initialState: AllTasksType = {};
 
 export const tasksReducer = (state = initialState, action: TasksActionType): AllTasksType => {
   switch (action.type) {
-    case ADD_TASK: {
+    case TasksActionsType.ADD_TASK: {
       let newTask: TodolistItemData = {
         id: v1(),
         title: action.payload.inputValue,
@@ -25,7 +19,7 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
       };
     }
 
-    case REMOVE_TASK:
+    case TasksActionsType.REMOVE_TASK:
       return {
         ...state,
         [action.payload.todolistId]: [...state[action.payload.todolistId]].filter(
@@ -33,7 +27,7 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
         ),
       };
 
-    case CHANGE_STATUS: {
+    case TasksActionsType.CHANGE_STATUS: {
       let todolistTasks = state[action.payload.todolistId];
       state[action.payload.todolistId] = todolistTasks.map((tasks) =>
         tasks.id === action.payload.taskId ? { ...tasks, checked: action.payload.status } : tasks
@@ -41,7 +35,7 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
       return { ...state };
     }
 
-    case CHANGE_TASK_TEXT: {
+    case TasksActionsType.CHANGE_TASK_TEXT: {
       let todolistTasks = state[action.payload.todolistId];
       state[action.payload.todolistId] = todolistTasks.map((tasks) =>
         tasks.id === action.payload.taskId ? { ...tasks, title: action.payload.newValue } : tasks
@@ -49,14 +43,14 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
       return { ...state };
     }
 
-    case ADD_TODOLIST: {
+    case TodolistsActionsType.ADD_TODOLIST: {
       return {
         ...state,
         [action.payload.todolistID]: [],
       };
     }
 
-    case REMOVE_TODOLIST: {
+    case TodolistsActionsType.REMOVE_TODOLIST: {
       const stateCopy = { ...state };
       delete stateCopy[action.payload];
       return stateCopy;

@@ -1,27 +1,29 @@
 import { FilterType } from '../../../types';
 
-export const REMOVE_TODOLIST = 'REMOVE-TODOLIST';
-export const ADD_TODOLIST = 'ADD-TODOLIST';
-export const CHANGE_TODOLIST_TITLE = 'CHANGE-TODOLIST-TITLE';
-export const CHANGE_TODOLIST_FILTER = 'CHANGE-TODOLIST-FILTER';
+export enum TodolistsActionsType {
+  ADD_TODOLIST = 'ADD_TODOLIST',
+  REMOVE_TODOLIST = 'REMOVE_TODOLIST',
+  CHANGE_TODOLIST_FILTER = 'CHANGE_TODOLIST_FILTER',
+  CHANGE_TODOLIST_TITLE = 'CHANGE_TODOLIST_TITLE',
+}
 
 export type RemoveTodolistActionType = {
-  type: typeof REMOVE_TODOLIST;
+  type: TodolistsActionsType.REMOVE_TODOLIST;
   payload: string;
 };
 
 export type AddTodolistActionType = {
-  type: typeof ADD_TODOLIST;
+  type: TodolistsActionsType.ADD_TODOLIST;
   payload: { newTodolistTitle: string; todolistID: string };
 };
 
 export type ChangeTodolistTitleActionType = {
-  type: typeof CHANGE_TODOLIST_TITLE;
+  type: TodolistsActionsType.CHANGE_TODOLIST_TITLE;
   payload: { id: string; title: string };
 };
 
 export type ChangeTodolistFilterActionType = {
-  type: typeof CHANGE_TODOLIST_FILTER;
+  type: TodolistsActionsType.CHANGE_TODOLIST_FILTER;
   payload: { id: string; filter: FilterType };
 };
 

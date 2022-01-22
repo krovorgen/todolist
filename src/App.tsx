@@ -73,7 +73,6 @@ export const App: FC = () => {
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        theme="dark"
         pauseOnFocusLoss
         draggable
         pauseOnHover

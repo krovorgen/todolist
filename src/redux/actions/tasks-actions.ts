@@ -1,21 +1,18 @@
 import {
-  ADD_TASK,
   AddTaskActionType,
-  CHANGE_STATUS,
-  CHANGE_TASK_TEXT,
   changeStatusActionType,
   changeTaskTextActionType,
-  REMOVE_TASK,
   RemoveTaskActionType,
+  TasksActionsType,
 } from './types/tasks-actions.type';
 
 export const addTaskAC = (inputValue: string, todolistId: string): AddTaskActionType => ({
-  type: ADD_TASK,
+  type: TasksActionsType.ADD_TASK,
   payload: { inputValue, todolistId },
 });
 
 export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => ({
-  type: REMOVE_TASK,
+  type: TasksActionsType.REMOVE_TASK,
   payload: { taskId, todolistId },
 });
 
@@ -24,7 +21,7 @@ export const changeStatusAC = (
   status: boolean,
   todolistId: string
 ): changeStatusActionType => ({
-  type: CHANGE_STATUS,
+  type: TasksActionsType.CHANGE_STATUS,
   payload: { taskId, status, todolistId },
 });
 
@@ -33,6 +30,6 @@ export const changeTaskTextAC = (
   newValue: string,
   todolistId: string
 ): changeTaskTextActionType => ({
-  type: CHANGE_TASK_TEXT,
+  type: TasksActionsType.CHANGE_TASK_TEXT,
   payload: { taskId, newValue, todolistId },
 });
