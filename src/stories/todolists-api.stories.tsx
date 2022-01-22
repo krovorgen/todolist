@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { api, TodolistTask, TodolistTasksType, TodolistType } from '../api';
-import { Input } from '../components/atoms/Input';
-import { Button } from '../components/atoms/Button';
+import { api, TodolistTasksType, TodolistType } from '../api';
+import { Input } from '@alfalab/core-components/input';
+import { Button } from '@alfalab/core-components/button';
 
 export default {
   title: 'API',
@@ -307,13 +307,13 @@ export const UpdateTaskTodolistTitle = () => {
         />
         <Input
           type="text"
-          value={status}
+          value={String(status)}
           placeholder="status"
           onChange={(e) => setStatus(+e.currentTarget.value)}
         />
         <Input
           type="text"
-          value={priority}
+          value={String(priority)}
           placeholder="priority"
           onChange={(e) => setPriority(+e.currentTarget.value)}
         />
