@@ -1,19 +1,21 @@
 import React, { ChangeEvent, FC, KeyboardEvent, memo, useState } from 'react';
 import cn from 'classnames';
 
-import { Input } from '../atoms/Input';
-import { Button } from '../atoms/Button';
+import { Input } from '@alfalab/core-components/input';
+import { Button } from '@alfalab/core-components/button';
+import { PaymentPlusMWhiteIcon } from '@alfalab/icons-classic/PaymentPlusMWhiteIcon';
 
 import styles from './styles.module.scss';
 
 export type AddItemFormProps = {
   callback: (newTaskTitle: string) => void;
   addClass?: string;
+  labelInput: string;
 };
 
 type ErrorValueType = string | null;
 
-export const AddItemForm: FC<AddItemFormProps> = memo(({ callback, addClass }) => {
+export const AddItemForm: FC<AddItemFormProps> = memo(({ callback, addClass, labelInput }) => {
   const [error, setError] = useState<ErrorValueType>(null);
   const [newTaskTitle, setNewTaskTitle] = useState('');
   const onChangeInputValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,15 +43,16 @@ export const AddItemForm: FC<AddItemFormProps> = memo(({ callback, addClass }) =
         onChange={onChangeInputValue}
         onKeyPress={onEnterAddTask}
         value={newTaskTitle}
-        sizes="sm"
-        addClass={styles.input}
+        label={labelInput}
+        size="s"
+        className={styles.input}
       />
       <Button
+        view="primary"
         onClick={onAddTask}
-        variant="iconOnly"
-        sizes="sm"
-        icon="plus"
-        addClass={styles.button}
+        size="s"
+        leftAddons={<PaymentPlusMWhiteIcon />}
+        className={styles.button}
       />
     </div>
   );

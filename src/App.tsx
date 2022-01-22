@@ -1,5 +1,6 @@
 import React, { FC, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { FilterType, RootStateType } from './types';
 import {
@@ -9,6 +10,7 @@ import {
   removeTodolistAC,
 } from './redux/actions/todolists-actions';
 import { AddItemForm } from './components/AddItemForm';
+import { Typography } from '@alfalab/core-components/typography';
 import { Todolist } from './components/Todolist';
 
 import styles from './styles.module.scss';
@@ -33,26 +35,49 @@ export const App: FC = () => {
 
   const removeTodolist = useCallback((id: string) => dispatch(removeTodolistAC(id)), [dispatch]);
 
-  const addTodolist = useCallback((title: string) => dispatch(addTodolistAC(title)), [dispatch]);
+  const addTodolist = useCallback(
+    (title: string) => {
+      dispatch(addTodolistAC(title));
+      toast.success(`todolist ${title} was created`);
+    },
+    [dispatch]
+  );
 
   return (
-    <div className={`container`}>
-      <AddItemForm callback={addTodolist} addClass={styles.form} />
-      <ul className={styles.list}>
-        {todolists.map((todolist) => {
-          return (
-            <Todolist
-              key={todolist.id}
-              id={todolist.id}
-              title={todolist.title}
-              onChangeFilter={onChangeFilter}
-              filter={todolist.filter}
-              removeTodolist={removeTodolist}
-              onChangeTitleTodolist={onChangeTitleTodolist}
-            />
-          );
-        })}
-      </ul>
-    </div>
+    <>
+      <div className={`container`}>
+        <Typography.Title tag="h1" className={styles.title}>
+          Todolist
+        </Typography.Title>
+        <AddItemForm callback={addTodolist} labelInput="Todolist title" addClass={styles.form} />
+        <ul className={styles.list}>
+          {todolists.map((todolist) => {
+            return (
+              <Todolist
+                key={todolist.id}
+                id={todolist.id}
+                title={todolist.title}
+                onChangeFilter={onChangeFilter}
+                filter={todolist.filter}
+                removeTodolist={removeTodolist}
+                onChangeTitleTodolist={onChangeTitleTodolist}
+              />
+            );
+          })}
+        </ul>
+      </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        theme="dark"
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+    </>
   );
 };

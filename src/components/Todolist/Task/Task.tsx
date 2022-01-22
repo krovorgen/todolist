@@ -2,9 +2,10 @@ import React, { ChangeEvent, FC, memo, useCallback } from 'react';
 import cn from 'classnames';
 import { useDispatch } from 'react-redux';
 
-import { Checkbox } from '../../atoms/Checkbox';
 import { EditableSpan } from '../../EditableSpan';
-import { Button } from '../../atoms/Button';
+import { Checkbox } from '@alfalab/core-components/checkbox';
+import { Button } from '@alfalab/core-components/button';
+import { CloseXsWhiteIcon } from '@alfalab/icons-classic/CloseXsWhiteIcon';
 import {
   changeStatusAC,
   changeTaskTextAC,
@@ -24,7 +25,8 @@ export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
 
   const onRemoveHandler = () => dispatch(removeTaskAC(task.id, todolistId));
 
-  const onChangeStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChangeStatusHandler = (e?: ChangeEvent<HTMLInputElement>) => {
+    // @ts-ignore
     dispatch(changeStatusAC(task.id, e.currentTarget.checked, todolistId));
   };
 
@@ -34,22 +36,21 @@ export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
     },
     [dispatch, task.id, todolistId]
   );
-  console.log('Task');
 
   return (
-    <li className={cn(styles.item)} key={task.id}>
+    <li className={cn(styles.item)}>
       <Checkbox
         onChange={onChangeStatusHandler}
         checked={task.checked}
-        addClass={cn(styles.checkbox, { [styles.checked]: task.checked })}
-      >
-        <EditableSpan title={task.title} newEditableValue={newEditableValue} />
-      </Checkbox>
+        className={cn(styles.checkbox)}
+      />
+      <EditableSpan title={task.title} newEditableValue={newEditableValue} />
       <Button
-        addClass={styles.deleteItem}
+        className={styles.deleteItem}
         onClick={onRemoveHandler}
-        variant="iconOnly"
-        icon="cross"
+        size="xxs"
+        view="primary"
+        leftAddons={<CloseXsWhiteIcon />}
       />
     </li>
   );

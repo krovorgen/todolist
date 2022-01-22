@@ -5,10 +5,12 @@ import { addTaskAC } from '../../redux/actions/tasks-actions';
 import { FilterType, RootStateType } from '../../types';
 import { EditableSpan } from '../EditableSpan';
 import { AddItemForm } from '../AddItemForm';
-import { Button } from '../atoms/Button';
+import { CloseMWhiteIcon } from '@alfalab/icons-classic/CloseMWhiteIcon';
+import { Button } from '@alfalab/core-components/button';
 import { Task } from './Task';
 
 import styles from './style.module.scss';
+import { toast } from 'react-toastify';
 
 export interface ITodolistProps {
   id: string;
@@ -28,6 +30,7 @@ export const Todolist: FC<ITodolistProps> = memo(
     const addTaskHandler = useCallback(
       (title: string) => {
         dispatch(addTaskAC(title, id));
+        toast.success(`task ${title} was created`);
       },
       [dispatch, id]
     );
@@ -65,22 +68,43 @@ export const Todolist: FC<ITodolistProps> = memo(
       <li className={styles.todolist}>
         <div className={styles.head}>
           <EditableSpan title={title} newEditableValue={editTitleTodolist} />
-          <Button onClick={removeTodolistHandler} variant="iconOnly" icon="cross" sizes="sm" />
+          <Button
+            onClick={removeTodolistHandler}
+            view="primary"
+            leftAddons={<CloseMWhiteIcon />}
+            size="s"
+          />
         </div>
-        <AddItemForm callback={addTaskHandler} addClass={styles.addTodolist} />
+        <AddItemForm
+          callback={addTaskHandler}
+          labelInput="Task title"
+          addClass={styles.addTodolist}
+        />
         <ul className={styles.items}>
           {tasksForTodolist.map((task) => {
             return <Task key={task.id} task={task} todolistId={id} />;
           })}
         </ul>
         <div className={styles.navigation}>
-          <Button onClick={onAllClickHandler} sizes="sm" active={filter === 'all'}>
+          <Button
+            onClick={onAllClickHandler}
+            size="xs"
+            view={filter === 'all' ? 'primary' : 'secondary'}
+          >
             All
           </Button>
-          <Button onClick={onActiveClickHandler} sizes="sm" active={filter === 'active'}>
+          <Button
+            onClick={onActiveClickHandler}
+            size="xs"
+            view={filter === 'active' ? 'primary' : 'secondary'}
+          >
             Active
           </Button>
-          <Button onClick={onCompletedClickHandler} sizes="sm" active={filter === 'completed'}>
+          <Button
+            onClick={onCompletedClickHandler}
+            size="xs"
+            view={filter === 'completed' ? 'primary' : 'secondary'}
+          >
             Completed
           </Button>
         </div>
