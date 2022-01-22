@@ -29,7 +29,7 @@
     "deploy": "gh-pages -d build",
     "stylelint:fix": "stylelint \"**/*{.css,.scss}\" --fix",
     "eject": "react-scripts eject",
-    "storybook": "start-storybook -p 6006 -s public",
+    "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
     "jest:integration": "jest -c integration/jest.config.js",
     "jest:integration:update": "jest -c integration/jest.config.js --updateSnapshot",
