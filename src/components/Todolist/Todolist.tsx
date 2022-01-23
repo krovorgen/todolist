@@ -1,4 +1,4 @@
-import React, { FC, memo, useCallback } from 'react';
+import React, { FC, memo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { addTaskAC } from '../../redux/actions/tasks-actions';
@@ -12,6 +12,7 @@ import { Task } from './Task';
 import styles from './style.module.scss';
 import { toast } from 'react-toastify';
 import { TaskStatuses } from '../../redux/actions/types/tasks-actions.type';
+import { fetchTasksThunk } from '../../redux/thunk/tasks-thunk';
 
 export interface ITodolistProps {
   id: string;
@@ -65,6 +66,11 @@ export const Todolist: FC<ITodolistProps> = memo(
     if (filter === 'completed') {
       tasksForTodolist = tasksForTodolist.filter((item) => item.status === TaskStatuses.Completed);
     }
+
+    useEffect(() => {
+      dispatch(fetchTasksThunk(id));
+    }, [dispatch, id]);
+
     return (
       <li className={styles.todolist}>
         <div className={styles.head}>

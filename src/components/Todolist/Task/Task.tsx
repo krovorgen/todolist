@@ -26,15 +26,18 @@ export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
 
   const onRemoveHandler = () => dispatch(removeTaskAC(task.id, todolistId));
 
-  const onChangeStatusHandler = (e?: ChangeEvent<HTMLInputElement>) => {
-    dispatch(
-      changeStatusAC(
-        task.id,
-        e?.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
-        todolistId
-      )
-    );
-  };
+  const onChangeStatusHandler = useCallback(
+    (e?: ChangeEvent<HTMLInputElement>) => {
+      dispatch(
+        changeStatusAC(
+          task.id,
+          e?.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
+          todolistId
+        )
+      );
+    },
+    [dispatch, task.id, todolistId]
+  );
 
   const newEditableValue = useCallback(
     (newValue: string) => {

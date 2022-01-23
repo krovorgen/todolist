@@ -19,7 +19,7 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
         ...tl,
         status: TaskStatuses.New,
       }));
-      return state;
+      return copyState;
     }
     case TasksActionsType.ADD_TASK: {
       let newTask: TodolistTask = {
@@ -39,7 +39,6 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
         [action.payload.todolistId]: [...state[action.payload.todolistId], newTask],
       };
     }
-
     case TasksActionsType.REMOVE_TASK:
       return {
         ...state,
@@ -47,7 +46,6 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
           (item) => item.id !== action.payload.taskId
         ),
       };
-
     case TasksActionsType.CHANGE_STATUS: {
       let todolistTasks = state[action.payload.todolistId];
       state[action.payload.todolistId] = todolistTasks.map((tasks) =>
@@ -55,7 +53,6 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
       );
       return { ...state };
     }
-
     case TasksActionsType.CHANGE_TASK_TEXT: {
       let todolistTasks = state[action.payload.todolistId];
       state[action.payload.todolistId] = todolistTasks.map((tasks) =>
@@ -63,7 +60,6 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
       );
       return { ...state };
     }
-
     case TodolistsActionsType.SET_TODOLISTS: {
       const copyState = state;
 
@@ -72,20 +68,17 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
       });
       return copyState;
     }
-
     case TodolistsActionsType.ADD_TODOLIST: {
       return {
         ...state,
         [action.payload.todolistID]: [],
       };
     }
-
     case TodolistsActionsType.REMOVE_TODOLIST: {
       const stateCopy = { ...state };
       delete stateCopy[action.payload];
       return stateCopy;
     }
-
     default:
       return state;
   }
