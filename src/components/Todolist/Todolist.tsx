@@ -11,6 +11,7 @@ import { Task } from './Task';
 
 import styles from './style.module.scss';
 import { toast } from 'react-toastify';
+import { TaskStatuses } from '../../redux/actions/types/tasks-actions.type';
 
 export interface ITodolistProps {
   id: string;
@@ -59,10 +60,10 @@ export const Todolist: FC<ITodolistProps> = memo(
     let tasksForTodolist = tasks;
 
     if (filter === 'active') {
-      tasksForTodolist = tasksForTodolist.filter((item) => !item.checked);
+      tasksForTodolist = tasksForTodolist.filter((item) => item.status !== TaskStatuses.Completed);
     }
     if (filter === 'completed') {
-      tasksForTodolist = tasksForTodolist.filter((item) => item.checked);
+      tasksForTodolist = tasksForTodolist.filter((item) => item.status === TaskStatuses.Completed);
     }
     return (
       <li className={styles.todolist}>

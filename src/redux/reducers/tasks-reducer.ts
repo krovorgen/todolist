@@ -1,17 +1,38 @@
-import { AllTasksType, TodolistItemData } from '../../types';
-import { TasksActionsType, TasksActionType } from '../actions/types/tasks-actions.type';
+import { AllTasksType } from '../../types';
+import {
+  TaskPriorities,
+  TasksActionsType,
+  TasksActionType,
+  TaskStatuses,
+} from '../actions/types/tasks-actions.type';
 import { v1 } from 'uuid';
 import { TodolistsActionsType } from '../actions/types/todolists-actions.type';
+import { TodolistTask } from '../../api';
 
 const initialState: AllTasksType = {};
 
 export const tasksReducer = (state = initialState, action: TasksActionType): AllTasksType => {
   switch (action.type) {
+    case TasksActionsType.SET_TASK: {
+      const copyState = { ...state };
+      copyState[action.payload.todolistId] = action.payload.tasks.map((tl) => ({
+        ...tl,
+        status: TaskStatuses.New,
+      }));
+      return state;
+    }
     case TasksActionsType.ADD_TASK: {
-      let newTask: TodolistItemData = {
+      let newTask: TodolistTask = {
         id: v1(),
         title: action.payload.inputValue,
-        checked: false,
+        status: TaskStatuses.New,
+        todoListId: action.payload.todolistId,
+        description: '',
+        startDate: new Date(),
+        deadline: new Date(),
+        addedDate: new Date(),
+        order: 0,
+        priority: TaskPriorities.Low,
       };
       return {
         ...state,
@@ -30,7 +51,7 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
     case TasksActionsType.CHANGE_STATUS: {
       let todolistTasks = state[action.payload.todolistId];
       state[action.payload.todolistId] = todolistTasks.map((tasks) =>
-        tasks.id === action.payload.taskId ? { ...tasks, checked: action.payload.status } : tasks
+        tasks.id === action.payload.taskId ? { ...tasks, status: action.payload.status } : tasks
       );
       return { ...state };
     }
@@ -41,6 +62,15 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
         tasks.id === action.payload.taskId ? { ...tasks, title: action.payload.newValue } : tasks
       );
       return { ...state };
+    }
+
+    case TodolistsActionsType.SET_TODOLISTS: {
+      const copyState = state;
+
+      action.payload.forEach((tl) => {
+        copyState[tl.id] = [];
+      });
+      return copyState;
     }
 
     case TodolistsActionsType.ADD_TODOLIST: {

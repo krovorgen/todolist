@@ -5,8 +5,15 @@ import {
   ChangeTodolistFilterActionType,
   ChangeTodolistTitleActionType,
   TodolistsActionsType,
+  SetTodolistActionType,
 } from './types/todolists-actions.type';
 import { v1 } from 'uuid';
+import { TodolistType } from '../../api';
+
+export const setTodolistAC = (todolist: TodolistType[]): SetTodolistActionType => ({
+  type: TodolistsActionsType.SET_TODOLISTS,
+  payload: todolist,
+});
 
 export const removeTodolistAC = (todolistId: string): RemoveTodolistActionType => ({
   type: TodolistsActionsType.REMOVE_TODOLIST,

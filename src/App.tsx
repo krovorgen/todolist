@@ -1,4 +1,4 @@
-import React, { FC, useCallback } from 'react';
+import React, { FC, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -12,6 +12,7 @@ import {
 import { AddItemForm } from './components/AddItemForm';
 import { Typography } from '@alfalab/core-components/typography';
 import { Todolist } from './components/Todolist';
+import { fetchTodolistsThunk } from './redux/thunk/todolists-thunk';
 
 import styles from './styles.module.scss';
 
@@ -42,6 +43,10 @@ export const App: FC = () => {
     },
     [dispatch]
   );
+
+  useEffect(() => {
+    dispatch(fetchTodolistsThunk());
+  }, [dispatch]);
 
   return (
     <>

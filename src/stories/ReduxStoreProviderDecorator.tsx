@@ -3,6 +3,7 @@ import { RootStateType } from '../types';
 import { combineReducers, createStore } from 'redux';
 import { todolistsReducer } from '../redux/reducers/todolists-reducer';
 import { tasksReducer } from '../redux/reducers/tasks-reducer';
+import { TaskPriorities, TaskStatuses } from '../redux/actions/types/tasks-actions.type';
 
 const rootReducer = combineReducers({
   todolists: todolistsReducer,
@@ -15,6 +16,8 @@ const initialStore = {
       id: '0bb455c0-57f3-11ec-8bfd-dfd1e574e13a',
       title: 'Test todolist',
       filter: 'all',
+      addedDate: new Date(),
+      order: 0,
     },
   ],
   tasks: {
@@ -22,17 +25,38 @@ const initialStore = {
       {
         id: '100b2cc0-57f3-11ec-8bfd-dfd1e574e13a',
         title: 'First task',
-        checked: false,
+        status: TaskStatuses.New,
+        todoListId: '0bb455c0-57f3-11ec-8bfd-dfd1e574e13a',
+        description: '',
+        startDate: new Date(),
+        deadline: new Date(),
+        addedDate: new Date(),
+        order: 0,
+        priority: TaskPriorities.Low,
       },
       {
         id: '12f07260-57f3-11ec-8bfd-dfd1e574e13a',
         title: 'Second task',
-        checked: false,
+        status: TaskStatuses.New,
+        todoListId: '0bb455c0-57f3-11ec-8bfd-dfd1e574e13a',
+        description: '',
+        startDate: new Date(),
+        deadline: new Date(),
+        addedDate: new Date(),
+        order: 0,
+        priority: TaskPriorities.Low,
       },
       {
         id: '15547a10-57f3-11ec-8bfd-dfd1e574e13a',
         title: 'Third task',
-        checked: false,
+        status: TaskStatuses.New,
+        todoListId: '0bb455c0-57f3-11ec-8bfd-dfd1e574e13a',
+        description: '',
+        startDate: new Date(),
+        deadline: new Date(),
+        addedDate: new Date(),
+        order: 0,
+        priority: TaskPriorities.Low,
       },
     ],
   },

@@ -1,15 +1,41 @@
-import { AddTodolistActionType, RemoveTodolistActionType } from './todolists-actions.type';
+import {
+  AddTodolistActionType,
+  RemoveTodolistActionType,
+  SetTodolistActionType,
+} from './todolists-actions.type';
+import { TodolistTask } from '../../../api';
 
 export enum TasksActionsType {
   REMOVE_TASK = 'REMOVE-TASK',
   ADD_TASK = 'ADD-TASK',
+  SET_TASK = 'SET-TASK',
   CHANGE_STATUS = 'CHANGE-STATUS',
   CHANGE_TASK_TEXT = 'CHANGE-TASK-TEXT',
+}
+
+export enum TaskStatuses {
+  New,
+  InProgress,
+  Completed,
+  Draft,
+}
+
+export enum TaskPriorities {
+  Low = 0,
+  Middle = 1,
+  Hi = 2,
+  Urgently = 3,
+  Later = 4,
 }
 
 export type AddTaskActionType = {
   type: TasksActionsType.ADD_TASK;
   payload: { inputValue: string; todolistId: string };
+};
+
+export type SetTaskActionType = {
+  type: TasksActionsType.SET_TASK;
+  payload: { tasks: TodolistTask[]; todolistId: string };
 };
 
 export type RemoveTaskActionType = {
@@ -19,7 +45,7 @@ export type RemoveTaskActionType = {
 
 export type changeStatusActionType = {
   type: TasksActionsType.CHANGE_STATUS;
-  payload: { taskId: string; status: boolean; todolistId: string };
+  payload: { taskId: string; status: TaskStatuses; todolistId: string };
 };
 
 export type changeTaskTextActionType = {
@@ -29,8 +55,10 @@ export type changeTaskTextActionType = {
 
 export type TasksActionType =
   | RemoveTaskActionType
+  | SetTodolistActionType
   | AddTaskActionType
   | changeStatusActionType
   | changeTaskTextActionType
   | AddTodolistActionType
+  | SetTaskActionType
   | RemoveTodolistActionType;

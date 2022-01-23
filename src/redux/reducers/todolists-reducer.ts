@@ -8,10 +8,22 @@ export const todolistsReducer = (
   action: TodolistsActionType
 ): TodolistDataType[] => {
   switch (action.type) {
+    case TodolistsActionsType.SET_TODOLISTS: {
+      return action.payload.map((tl) => ({
+        ...tl,
+        filter: 'all',
+      }));
+    }
     case TodolistsActionsType.ADD_TODOLIST: {
       return [
         ...state,
-        { id: action.payload.todolistID, title: action.payload.newTodolistTitle, filter: 'all' },
+        {
+          id: action.payload.todolistID,
+          title: action.payload.newTodolistTitle,
+          filter: 'all',
+          addedDate: new Date(),
+          order: 0,
+        },
       ];
     }
 

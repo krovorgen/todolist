@@ -1,21 +1,14 @@
 import rootReducer from '../redux/root-reducer';
-
-export type TodolistItemData = {
-  id: string;
-  title: string;
-  checked: boolean;
-};
+import { TodolistTask, TodolistType } from '../api';
 
 export type FilterType = 'all' | 'active' | 'completed';
 
-export type TodolistDataType = {
-  id: string;
-  title: string;
+export type TodolistDataType = TodolistType & {
   filter: FilterType;
 };
 
 export interface AllTasksType {
-  [key: string]: TodolistItemData[];
+  [key: string]: TodolistTask[];
 }
 
 export type RootStateType = ReturnType<typeof rootReducer>;

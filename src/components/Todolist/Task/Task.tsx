@@ -11,12 +11,13 @@ import {
   changeTaskTextAC,
   removeTaskAC,
 } from '../../../redux/actions/tasks-actions';
-import { TodolistItemData } from '../../../types';
 
 import styles from '../style.module.scss';
+import { TaskStatuses } from '../../../redux/actions/types/tasks-actions.type';
+import { TodolistTask } from '../../../api';
 
 export type TaskProps = {
-  task: TodolistItemData;
+  task: TodolistTask;
   todolistId: string;
 };
 
@@ -26,8 +27,13 @@ export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
   const onRemoveHandler = () => dispatch(removeTaskAC(task.id, todolistId));
 
   const onChangeStatusHandler = (e?: ChangeEvent<HTMLInputElement>) => {
-    // @ts-ignore
-    dispatch(changeStatusAC(task.id, e.currentTarget.checked, todolistId));
+    dispatch(
+      changeStatusAC(
+        task.id,
+        e?.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
+        todolistId
+      )
+    );
   };
 
   const newEditableValue = useCallback(
@@ -40,8 +46,8 @@ export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
   return (
     <li className={cn(styles.item)}>
       <Checkbox
+        checked={task.status === TaskStatuses.Completed}
         onChange={onChangeStatusHandler}
-        checked={task.checked}
         className={cn(styles.checkbox)}
       />
       <EditableSpan title={task.title} newEditableValue={newEditableValue} />

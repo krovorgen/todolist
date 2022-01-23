@@ -1,11 +1,18 @@
 import { FilterType } from '../../../types';
+import { TodolistType } from '../../../api';
 
 export enum TodolistsActionsType {
+  SET_TODOLISTS = 'SET_TODOLISTS',
   ADD_TODOLIST = 'ADD_TODOLIST',
   REMOVE_TODOLIST = 'REMOVE_TODOLIST',
   CHANGE_TODOLIST_FILTER = 'CHANGE_TODOLIST_FILTER',
   CHANGE_TODOLIST_TITLE = 'CHANGE_TODOLIST_TITLE',
 }
+
+export type SetTodolistActionType = {
+  type: TodolistsActionsType.SET_TODOLISTS;
+  payload: TodolistType[];
+};
 
 export type RemoveTodolistActionType = {
   type: TodolistsActionsType.REMOVE_TODOLIST;
@@ -28,6 +35,7 @@ export type ChangeTodolistFilterActionType = {
 };
 
 export type TodolistsActionType =
+  | SetTodolistActionType
   | RemoveTodolistActionType
   | AddTodolistActionType
   | ChangeTodolistTitleActionType
