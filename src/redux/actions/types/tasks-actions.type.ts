@@ -30,7 +30,7 @@ export enum TaskPriorities {
 
 export type AddTaskActionType = {
   type: TasksActionsType.ADD_TASK;
-  payload: { inputValue: string; todolistId: string };
+  payload: { task: TodolistTask };
 };
 
 export type SetTaskActionType = {

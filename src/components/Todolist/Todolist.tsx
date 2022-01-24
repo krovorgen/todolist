@@ -1,7 +1,5 @@
 import React, { FC, memo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { addTaskAC } from '../../redux/actions/tasks-actions';
 import { FilterType, RootStateType } from '../../types';
 import { EditableSpan } from '../EditableSpan';
 import { AddItemForm } from '../AddItemForm';
@@ -10,9 +8,8 @@ import { Button } from '@alfalab/core-components/button';
 import { Task } from './Task';
 
 import styles from './style.module.scss';
-import { toast } from 'react-toastify';
 import { TaskStatuses } from '../../redux/actions/types/tasks-actions.type';
-import { fetchTasksThunk } from '../../redux/thunk/tasks-thunk';
+import { addTaskTC, fetchTasksThunk } from '../../redux/thunk/tasks-thunk';
 
 export interface ITodolistProps {
   todolistId: string;
@@ -29,10 +26,9 @@ export const Todolist: FC<ITodolistProps> = memo(
 
     const tasks = useSelector((state: RootStateType) => state.tasks[todolistId]);
 
-    const addTaskHandler = useCallback(
+    const addTask = useCallback(
       (title: string) => {
-        dispatch(addTaskAC(title, todolistId));
-        toast.success(`task ${title} was created`);
+        dispatch(addTaskTC(todolistId, title));
       },
       [dispatch, todolistId]
     );
@@ -85,11 +81,7 @@ export const Todolist: FC<ITodolistProps> = memo(
             size="s"
           />
         </div>
-        <AddItemForm
-          callback={addTaskHandler}
-          labelInput="Task title"
-          addClass={styles.addTodolist}
-        />
+        <AddItemForm callback={addTask} labelInput="Task title" addClass={styles.addTodolist} />
         <ul className={styles.items}>
           {tasksForTodolist.map((task) => {
             return <Task key={task.id} task={task} todolistId={todolistId} />;

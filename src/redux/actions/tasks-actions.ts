@@ -14,9 +14,9 @@ export const setTaskAC = (tasks: TodolistTask[], todolistId: string): SetTaskAct
   payload: { tasks, todolistId },
 });
 
-export const addTaskAC = (inputValue: string, todolistId: string): AddTaskActionType => ({
+export const addTaskAC = (task: TodolistTask): AddTaskActionType => ({
   type: TasksActionsType.ADD_TASK,
-  payload: { inputValue, todolistId },
+  payload: { task },
 });
 
 export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => ({

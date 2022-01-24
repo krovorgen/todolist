@@ -33,9 +33,7 @@ export type TodolistTasksType = {
 };
 
 export type CreateTaskRT = {
-  data: {
-    item: TodolistTask;
-  };
+  item: TodolistTask;
 };
 
 export type CreateTodolistRT = {

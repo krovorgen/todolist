@@ -5,16 +5,13 @@ import { useDispatch } from 'react-redux';
 import { EditableSpan } from '../../EditableSpan';
 import { Checkbox } from '@alfalab/core-components/checkbox';
 import { Button } from '@alfalab/core-components/button';
-import { CloseXsWhiteIcon } from '@alfalab/icons-classic/CloseXsWhiteIcon';
-import {
-  changeStatusAC,
-  changeTaskTextAC,
-  removeTaskAC,
-} from '../../../redux/actions/tasks-actions';
-
-import styles from '../style.module.scss';
 import { TaskStatuses } from '../../../redux/actions/types/tasks-actions.type';
 import { TodolistTask } from '../../../api';
+import { deleteTaskTC } from '../../../redux/thunk/tasks-thunk';
+import { CloseXsWhiteIcon } from '@alfalab/icons-classic/CloseXsWhiteIcon';
+import { changeStatusAC, changeTaskTextAC } from '../../../redux/actions/tasks-actions';
+
+import styles from '../style.module.scss';
 
 export type TaskProps = {
   task: TodolistTask;
@@ -24,7 +21,9 @@ export type TaskProps = {
 export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
   const dispatch = useDispatch();
 
-  const onRemoveHandler = () => dispatch(removeTaskAC(task.id, todolistId));
+  const removeTask = useCallback(() => {
+    dispatch(deleteTaskTC(todolistId, task.id));
+  }, [dispatch, task.id, todolistId]);
 
   const onChangeStatusHandler = useCallback(
     (e?: ChangeEvent<HTMLInputElement>) => {
@@ -56,7 +55,7 @@ export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
       <EditableSpan title={task.title} newEditableValue={newEditableValue} />
       <Button
         className={styles.deleteItem}
-        onClick={onRemoveHandler}
+        onClick={removeTask}
         size="xxs"
         view="primary"
         leftAddons={<CloseXsWhiteIcon />}

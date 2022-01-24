@@ -1,13 +1,10 @@
 import { AllTasksType } from '../../types';
 import {
-  TaskPriorities,
   TasksActionsType,
   TasksActionType,
   TaskStatuses,
 } from '../actions/types/tasks-actions.type';
-import { v1 } from 'uuid';
 import { TodolistsActionsType } from '../actions/types/todolists-actions.type';
-import { TodolistTask } from '../../api';
 
 const initialState: AllTasksType = {};
 
@@ -22,21 +19,12 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
       return copyState;
     }
     case TasksActionsType.ADD_TASK: {
-      let newTask: TodolistTask = {
-        id: v1(),
-        title: action.payload.inputValue,
-        status: TaskStatuses.New,
-        todoListId: action.payload.todolistId,
-        description: '',
-        startDate: new Date(),
-        deadline: new Date(),
-        addedDate: new Date(),
-        order: 0,
-        priority: TaskPriorities.Low,
-      };
       return {
         ...state,
-        [action.payload.todolistId]: [...state[action.payload.todolistId], newTask],
+        [action.payload.task.todoListId]: [
+          ...state[action.payload.task.todoListId],
+          action.payload.task,
+        ],
       };
     }
     case TasksActionsType.REMOVE_TASK:

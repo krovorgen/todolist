@@ -243,7 +243,18 @@ test('correct task should be added to correct array', () => {
     ],
   };
 
-  const action = addTaskAC('juce', 'todolistId2');
+  const action = addTaskAC({
+    id: '3',
+    title: 'juce',
+    status: TaskStatuses.New,
+    todoListId: 'todolistId2',
+    description: '',
+    startDate: new Date(2022, 0, 17),
+    deadline: new Date(2022, 0, 17),
+    addedDate: new Date(2022, 0, 17),
+    order: 0,
+    priority: TaskPriorities.Low,
+  });
 
   const endState = tasksReducer(startState, action);
 
