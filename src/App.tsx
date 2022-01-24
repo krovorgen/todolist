@@ -60,7 +60,7 @@ export const App: FC = () => {
             return (
               <Todolist
                 key={todolist.id}
-                id={todolist.id}
+                todolistId={todolist.id}
                 title={todolist.title}
                 onChangeFilter={onChangeFilter}
                 filter={todolist.filter}

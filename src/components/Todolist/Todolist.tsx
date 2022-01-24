@@ -15,7 +15,7 @@ import { TaskStatuses } from '../../redux/actions/types/tasks-actions.type';
 import { fetchTasksThunk } from '../../redux/thunk/tasks-thunk';
 
 export interface ITodolistProps {
-  id: string;
+  todolistId: string;
   title: string;
   onChangeFilter: (filterValue: FilterType, id: string) => void;
   filter: FilterType;
@@ -24,38 +24,41 @@ export interface ITodolistProps {
 }
 
 export const Todolist: FC<ITodolistProps> = memo(
-  ({ id, title, onChangeFilter, filter, removeTodolist, onChangeTitleTodolist }) => {
+  ({ todolistId, title, onChangeFilter, filter, removeTodolist, onChangeTitleTodolist }) => {
     const dispatch = useDispatch();
 
-    const tasks = useSelector((state: RootStateType) => state.tasks[id]);
+    const tasks = useSelector((state: RootStateType) => state.tasks[todolistId]);
 
     const addTaskHandler = useCallback(
       (title: string) => {
-        dispatch(addTaskAC(title, id));
+        dispatch(addTaskAC(title, todolistId));
         toast.success(`task ${title} was created`);
       },
-      [dispatch, id]
+      [dispatch, todolistId]
     );
 
-    const onAllClickHandler = useCallback(() => onChangeFilter('all', id), [onChangeFilter, id]);
+    const onAllClickHandler = useCallback(
+      () => onChangeFilter('all', todolistId),
+      [onChangeFilter, todolistId]
+    );
     const onActiveClickHandler = useCallback(
-      () => onChangeFilter('active', id),
-      [onChangeFilter, id]
+      () => onChangeFilter('active', todolistId),
+      [onChangeFilter, todolistId]
     );
     const onCompletedClickHandler = useCallback(
-      () => onChangeFilter('completed', id),
-      [onChangeFilter, id]
+      () => onChangeFilter('completed', todolistId),
+      [onChangeFilter, todolistId]
     );
 
-    const removeTodolistHandler = () => {
-      removeTodolist(id);
-    };
+    const removeTodolistHandler = useCallback(() => {
+      removeTodolist(todolistId);
+    }, [todolistId, removeTodolist]);
 
     const editTitleTodolist = useCallback(
       (newValue: string) => {
-        onChangeTitleTodolist(newValue, id);
+        onChangeTitleTodolist(newValue, todolistId);
       },
-      [onChangeTitleTodolist, id]
+      [onChangeTitleTodolist, todolistId]
     );
 
     let tasksForTodolist = tasks;
@@ -68,8 +71,8 @@ export const Todolist: FC<ITodolistProps> = memo(
     }
 
     useEffect(() => {
-      dispatch(fetchTasksThunk(id));
-    }, [dispatch, id]);
+      dispatch(fetchTasksThunk(todolistId));
+    }, [dispatch, todolistId]);
 
     return (
       <li className={styles.todolist}>
@@ -89,7 +92,7 @@ export const Todolist: FC<ITodolistProps> = memo(
         />
         <ul className={styles.items}>
           {tasksForTodolist.map((task) => {
-            return <Task key={task.id} task={task} todolistId={id} />;
+            return <Task key={task.id} task={task} todolistId={todolistId} />;
           })}
         </ul>
         {tasksForTodolist.length !== 0 && (
