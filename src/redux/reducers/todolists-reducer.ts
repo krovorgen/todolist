@@ -8,13 +8,12 @@ export const todolistsReducer = (
   action: TodolistsActionType
 ): TodolistDataType[] => {
   switch (action.type) {
-    case TodolistsActionsType.SET_TODOLISTS: {
+    case TodolistsActionsType.SET_TODOLISTS:
       return action.payload.map((tl) => ({
         ...tl,
         filter: 'all',
       }));
-    }
-    case TodolistsActionsType.ADD_TODOLIST: {
+    case TodolistsActionsType.ADD_TODOLIST:
       return [
         ...state,
         {
@@ -22,27 +21,16 @@ export const todolistsReducer = (
           filter: 'all',
         },
       ];
-    }
-
-    case TodolistsActionsType.REMOVE_TODOLIST: {
+    case TodolistsActionsType.REMOVE_TODOLIST:
       return state.filter((item) => item.id !== action.payload);
-    }
-
-    case TodolistsActionsType.CHANGE_TODOLIST_TITLE: {
-      let todolist = state.find((item) => item.id === action.payload.id);
-      if (todolist) {
-        todolist.title = action.payload.title;
-      }
-      return [...state];
-    }
-
-    case TodolistsActionsType.CHANGE_TODOLIST_FILTER: {
-      let todolist = state.find((item) => item.id === action.payload.id);
-      if (todolist) {
-        todolist.filter = action.payload.filter;
-      }
-      return [...state];
-    }
+    case TodolistsActionsType.CHANGE_TODOLIST_TITLE:
+      return state.map((tl) =>
+        tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl
+      );
+    case TodolistsActionsType.CHANGE_TODOLIST_FILTER:
+      return state.map((tl) =>
+        tl.id === action.payload.id ? { ...tl, filter: action.payload.filter } : tl
+      );
 
     default:
       return state;

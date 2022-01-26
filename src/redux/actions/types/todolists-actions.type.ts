@@ -1,5 +1,10 @@
-import { FilterType } from '../../../types';
-import { TodolistType } from '../../../api';
+import {
+  addTodolistAC,
+  changeTodolistFilterAC,
+  changeTodolistTitleAC,
+  removeTodolistAC,
+  setTodolistAC,
+} from '../todolists-actions';
 
 export enum TodolistsActionsType {
   SET_TODOLISTS = 'SET_TODOLISTS',
@@ -9,34 +14,9 @@ export enum TodolistsActionsType {
   CHANGE_TODOLIST_TITLE = 'CHANGE_TODOLIST_TITLE',
 }
 
-export type SetTodolistActionType = {
-  type: TodolistsActionsType.SET_TODOLISTS;
-  payload: TodolistType[];
-};
-
-export type RemoveTodolistActionType = {
-  type: TodolistsActionsType.REMOVE_TODOLIST;
-  payload: string;
-};
-
-export type AddTodolistActionType = {
-  type: TodolistsActionsType.ADD_TODOLIST;
-  payload: TodolistType;
-};
-
-export type ChangeTodolistTitleActionType = {
-  type: TodolistsActionsType.CHANGE_TODOLIST_TITLE;
-  payload: { id: string; title: string };
-};
-
-export type ChangeTodolistFilterActionType = {
-  type: TodolistsActionsType.CHANGE_TODOLIST_FILTER;
-  payload: { id: string; filter: FilterType };
-};
-
 export type TodolistsActionType =
-  | SetTodolistActionType
-  | RemoveTodolistActionType
-  | AddTodolistActionType
-  | ChangeTodolistTitleActionType
-  | ChangeTodolistFilterActionType;
+  | ReturnType<typeof setTodolistAC>
+  | ReturnType<typeof removeTodolistAC>
+  | ReturnType<typeof addTodolistAC>
+  | ReturnType<typeof changeTodolistTitleAC>
+  | ReturnType<typeof changeTodolistFilterAC>;

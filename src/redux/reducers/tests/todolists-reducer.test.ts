@@ -8,7 +8,6 @@ import {
   removeTodolistAC,
   setTodolistAC,
 } from '../../actions/todolists-actions';
-import { RemoveTodolistActionType } from '../../actions/types/todolists-actions.type';
 import { TodolistType } from '../../../api';
 
 test('correct todolist should be removed', () => {
@@ -20,7 +19,7 @@ test('correct todolist should be removed', () => {
     { id: todolistId2, title: 'What to buy', filter: 'all', addedDate: new Date(), order: 0 },
   ];
 
-  const action: RemoveTodolistActionType = removeTodolistAC(todolistId1);
+  const action: ReturnType<typeof removeTodolistAC> = removeTodolistAC(todolistId1);
 
   const endState = todolistsReducer(startState, action);
 

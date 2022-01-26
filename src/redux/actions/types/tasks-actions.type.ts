@@ -1,10 +1,5 @@
-import {
-  AddTodolistActionType,
-  RemoveTodolistActionType,
-  SetTodolistActionType,
-} from './todolists-actions.type';
-import { TodolistTask } from '../../../api';
-import { UpdateTaskModelType } from '../../thunk/tasks-thunk';
+import { addTodolistAC, removeTodolistAC, setTodolistAC } from '../todolists-actions';
+import { addTaskAC, removeTaskAC, setTaskAC, updateTaskAC } from '../tasks-actions';
 
 export enum TasksActionsType {
   REMOVE_TASK = 'REMOVE-TASK',
@@ -29,31 +24,11 @@ export enum TaskPriorities {
   Later = 4,
 }
 
-export type AddTaskAT = {
-  type: TasksActionsType.ADD_TASK;
-  payload: { task: TodolistTask };
-};
-
-export type SetTaskAT = {
-  type: TasksActionsType.SET_TASK;
-  payload: { tasks: TodolistTask[]; todolistId: string };
-};
-
-export type RemoveTaskAT = {
-  type: TasksActionsType.REMOVE_TASK;
-  payload: { taskId: string; todolistId: string };
-};
-
-export type UpdateTaskAT = {
-  type: TasksActionsType.UPDATE_TASK;
-  payload: { taskId: string; model: UpdateTaskModelType; todolistId: string };
-};
-
 export type TasksActionType =
-  | RemoveTaskAT
-  | SetTodolistActionType
-  | AddTaskAT
-  | UpdateTaskAT
-  | AddTodolistActionType
-  | SetTaskAT
-  | RemoveTodolistActionType;
+  | ReturnType<typeof setTaskAC>
+  | ReturnType<typeof addTaskAC>
+  | ReturnType<typeof removeTaskAC>
+  | ReturnType<typeof updateTaskAC>
+  | ReturnType<typeof setTodolistAC>
+  | ReturnType<typeof removeTodolistAC>
+  | ReturnType<typeof addTodolistAC>;

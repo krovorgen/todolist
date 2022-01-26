@@ -7,9 +7,7 @@ const initialState: AllTasksType = {};
 export const tasksReducer = (state = initialState, action: TasksActionType): AllTasksType => {
   switch (action.type) {
     case TasksActionsType.SET_TASK: {
-      const copyState = { ...state };
-      copyState[action.payload.todolistId] = action.payload.tasks;
-      return copyState;
+      return { ...state, [action.payload.todolistId]: action.payload.tasks };
     }
     case TasksActionsType.ADD_TASK: {
       return {
@@ -28,11 +26,12 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
         ),
       };
     case TasksActionsType.UPDATE_TASK: {
-      let todolistTasks = state[action.payload.todolistId];
-      state[action.payload.todolistId] = todolistTasks.map((tasks) =>
-        tasks.id === action.payload.taskId ? { ...tasks, ...action.payload.model } : tasks
-      );
-      return { ...state };
+      return {
+        ...state,
+        [action.payload.todolistId]: state[action.payload.todolistId].map((tasks) =>
+          tasks.id === action.payload.taskId ? { ...tasks, ...action.payload.model } : tasks
+        ),
+      };
     }
     case TodolistsActionsType.SET_TODOLISTS: {
       const copyState = state;
