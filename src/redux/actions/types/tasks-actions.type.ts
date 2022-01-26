@@ -4,13 +4,14 @@ import {
   SetTodolistActionType,
 } from './todolists-actions.type';
 import { TodolistTask } from '../../../api';
+import { UpdateTaskModelType } from '../../thunk/tasks-thunk';
 
 export enum TasksActionsType {
   REMOVE_TASK = 'REMOVE-TASK',
   ADD_TASK = 'ADD-TASK',
   SET_TASK = 'SET-TASK',
   CHANGE_STATUS = 'CHANGE-STATUS',
-  CHANGE_TASK_TEXT = 'CHANGE-TASK-TEXT',
+  UPDATE_TASK = 'UPDATE_TASK',
 }
 
 export enum TaskStatuses {
@@ -28,37 +29,31 @@ export enum TaskPriorities {
   Later = 4,
 }
 
-export type AddTaskActionType = {
+export type AddTaskAT = {
   type: TasksActionsType.ADD_TASK;
   payload: { task: TodolistTask };
 };
 
-export type SetTaskActionType = {
+export type SetTaskAT = {
   type: TasksActionsType.SET_TASK;
   payload: { tasks: TodolistTask[]; todolistId: string };
 };
 
-export type RemoveTaskActionType = {
+export type RemoveTaskAT = {
   type: TasksActionsType.REMOVE_TASK;
   payload: { taskId: string; todolistId: string };
 };
 
-export type changeStatusActionType = {
-  type: TasksActionsType.CHANGE_STATUS;
-  payload: { taskId: string; status: TaskStatuses; todolistId: string };
-};
-
-export type changeTaskTextActionType = {
-  type: TasksActionsType.CHANGE_TASK_TEXT;
-  payload: { taskId: string; newValue: string; todolistId: string };
+export type UpdateTaskAT = {
+  type: TasksActionsType.UPDATE_TASK;
+  payload: { taskId: string; model: UpdateTaskModelType; todolistId: string };
 };
 
 export type TasksActionType =
-  | RemoveTaskActionType
+  | RemoveTaskAT
   | SetTodolistActionType
-  | AddTaskActionType
-  | changeStatusActionType
-  | changeTaskTextActionType
+  | AddTaskAT
+  | UpdateTaskAT
   | AddTodolistActionType
-  | SetTaskActionType
+  | SetTaskAT
   | RemoveTodolistActionType;

@@ -1,24 +1,24 @@
 import React, { FC, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import { FilterType, RootStateType } from './types';
-import {
-  addTodolistAC,
-  changeTodolistFilterAC,
-  changeTodolistTitleAC,
-  removeTodolistAC,
-} from './redux/actions/todolists-actions';
+import { changeTodolistFilterAC } from './redux/actions/todolists-actions';
 import { AddItemForm } from './components/AddItemForm';
 import { Typography } from '@alfalab/core-components/typography';
 import { Todolist } from './components/Todolist';
-import { fetchTodolistsThunk } from './redux/thunk/todolists-thunk';
+import {
+  addTodolistTC,
+  deleteTodolistTC,
+  fetchTodolistsTC,
+  updateTitleTodolistTC,
+} from './redux/thunk/todolists-thunk';
 
 import styles from './styles.module.scss';
 
 export const App: FC = () => {
   const dispatch = useDispatch();
-  const { todolists } = useSelector((state: RootStateType) => state);
+  const todolists = useSelector((state: RootStateType) => state.todolists);
 
   const onChangeFilter = useCallback(
     (filterValue: FilterType, id: string) => {
@@ -27,25 +27,29 @@ export const App: FC = () => {
     [dispatch]
   );
 
-  const onChangeTitleTodolist = useCallback(
-    (newValue: string, todolistId: string) => {
-      dispatch(changeTodolistTitleAC(todolistId, newValue));
+  const removeTodolist = useCallback(
+    (todolistId: string) => {
+      dispatch(deleteTodolistTC(todolistId));
     },
     [dispatch]
   );
 
-  const removeTodolist = useCallback((id: string) => dispatch(removeTodolistAC(id)), [dispatch]);
-
   const addTodolist = useCallback(
     (title: string) => {
-      dispatch(addTodolistAC(title));
-      toast.success(`todolist ${title} was created`);
+      dispatch(addTodolistTC(title));
+    },
+    [dispatch]
+  );
+
+  const changeTitleTodolist = useCallback(
+    (newValue: string, todolistId: string) => {
+      dispatch(updateTitleTodolistTC(todolistId, newValue));
     },
     [dispatch]
   );
 
   useEffect(() => {
-    dispatch(fetchTodolistsThunk());
+    dispatch(fetchTodolistsTC());
   }, [dispatch]);
 
   return (
@@ -65,7 +69,7 @@ export const App: FC = () => {
                 onChangeFilter={onChangeFilter}
                 filter={todolist.filter}
                 removeTodolist={removeTodolist}
-                onChangeTitleTodolist={onChangeTitleTodolist}
+                onChangeTitleTodolist={changeTitleTodolist}
               />
             );
           })}

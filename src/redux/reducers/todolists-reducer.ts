@@ -18,11 +18,8 @@ export const todolistsReducer = (
       return [
         ...state,
         {
-          id: action.payload.todolistID,
-          title: action.payload.newTodolistTitle,
+          ...action.payload,
           filter: 'all',
-          addedDate: new Date(),
-          order: 0,
         },
       ];
     }

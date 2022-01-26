@@ -21,7 +21,7 @@ export type RemoveTodolistActionType = {
 
 export type AddTodolistActionType = {
   type: TodolistsActionsType.ADD_TODOLIST;
-  payload: { newTodolistTitle: string; todolistID: string };
+  payload: TodolistType;
 };
 
 export type ChangeTodolistTitleActionType = {

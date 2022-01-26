@@ -1,9 +1,5 @@
 import { AllTasksType } from '../../types';
-import {
-  TasksActionsType,
-  TasksActionType,
-  TaskStatuses,
-} from '../actions/types/tasks-actions.type';
+import { TasksActionsType, TasksActionType } from '../actions/types/tasks-actions.type';
 import { TodolistsActionsType } from '../actions/types/todolists-actions.type';
 
 const initialState: AllTasksType = {};
@@ -12,10 +8,7 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
   switch (action.type) {
     case TasksActionsType.SET_TASK: {
       const copyState = { ...state };
-      copyState[action.payload.todolistId] = action.payload.tasks.map((tl) => ({
-        ...tl,
-        status: TaskStatuses.New,
-      }));
+      copyState[action.payload.todolistId] = action.payload.tasks;
       return copyState;
     }
     case TasksActionsType.ADD_TASK: {
@@ -34,17 +27,10 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
           (item) => item.id !== action.payload.taskId
         ),
       };
-    case TasksActionsType.CHANGE_STATUS: {
+    case TasksActionsType.UPDATE_TASK: {
       let todolistTasks = state[action.payload.todolistId];
       state[action.payload.todolistId] = todolistTasks.map((tasks) =>
-        tasks.id === action.payload.taskId ? { ...tasks, status: action.payload.status } : tasks
-      );
-      return { ...state };
-    }
-    case TasksActionsType.CHANGE_TASK_TEXT: {
-      let todolistTasks = state[action.payload.todolistId];
-      state[action.payload.todolistId] = todolistTasks.map((tasks) =>
-        tasks.id === action.payload.taskId ? { ...tasks, title: action.payload.newValue } : tasks
+        tasks.id === action.payload.taskId ? { ...tasks, ...action.payload.model } : tasks
       );
       return { ...state };
     }
@@ -59,7 +45,7 @@ export const tasksReducer = (state = initialState, action: TasksActionType): All
     case TodolistsActionsType.ADD_TODOLIST: {
       return {
         ...state,
-        [action.payload.todolistID]: [],
+        [action.payload.id]: [],
       };
     }
     case TodolistsActionsType.REMOVE_TODOLIST: {

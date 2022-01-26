@@ -1,43 +1,33 @@
 import {
-  AddTaskActionType,
-  changeStatusActionType,
-  changeTaskTextActionType,
-  RemoveTaskActionType,
-  SetTaskActionType,
+  AddTaskAT,
+  RemoveTaskAT,
+  SetTaskAT,
   TasksActionsType,
-  TaskStatuses,
+  UpdateTaskAT,
 } from './types/tasks-actions.type';
 import { TodolistTask } from '../../api';
+import { UpdateTaskModelType } from '../thunk/tasks-thunk';
 
-export const setTaskAC = (tasks: TodolistTask[], todolistId: string): SetTaskActionType => ({
+export const setTaskAC = (tasks: TodolistTask[], todolistId: string): SetTaskAT => ({
   type: TasksActionsType.SET_TASK,
   payload: { tasks, todolistId },
 });
 
-export const addTaskAC = (task: TodolistTask): AddTaskActionType => ({
+export const addTaskAC = (task: TodolistTask): AddTaskAT => ({
   type: TasksActionsType.ADD_TASK,
   payload: { task },
 });
 
-export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskActionType => ({
+export const removeTaskAC = (taskId: string, todolistId: string): RemoveTaskAT => ({
   type: TasksActionsType.REMOVE_TASK,
   payload: { taskId, todolistId },
 });
 
-export const changeStatusAC = (
+export const updateTaskAC = (
   taskId: string,
-  status: TaskStatuses,
+  model: UpdateTaskModelType,
   todolistId: string
-): changeStatusActionType => ({
-  type: TasksActionsType.CHANGE_STATUS,
-  payload: { taskId, status, todolistId },
-});
-
-export const changeTaskTextAC = (
-  taskId: string,
-  newValue: string,
-  todolistId: string
-): changeTaskTextActionType => ({
-  type: TasksActionsType.CHANGE_TASK_TEXT,
-  payload: { taskId, newValue, todolistId },
+): UpdateTaskAT => ({
+  type: TasksActionsType.UPDATE_TASK,
+  payload: { taskId, model, todolistId },
 });

@@ -39,7 +39,15 @@ test('correct todolist should be added', () => {
     { id: todolistId2, title: 'What to buy', filter: 'all', addedDate: new Date(), order: 0 },
   ];
 
-  const endState = todolistsReducer(startState, addTodolistAC(newTodolistTitle));
+  const endState = todolistsReducer(
+    startState,
+    addTodolistAC({
+      id: todolistId1,
+      title: newTodolistTitle,
+      addedDate: new Date(),
+      order: 0,
+    })
+  );
 
   expect(endState.length).toBe(3);
   expect(endState[2].title).toBe(newTodolistTitle);

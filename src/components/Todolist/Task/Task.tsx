@@ -7,9 +7,8 @@ import { Checkbox } from '@alfalab/core-components/checkbox';
 import { Button } from '@alfalab/core-components/button';
 import { TaskStatuses } from '../../../redux/actions/types/tasks-actions.type';
 import { TodolistTask } from '../../../api';
-import { deleteTaskTC } from '../../../redux/thunk/tasks-thunk';
+import { deleteTaskTC, updateTaskTC } from '../../../redux/thunk/tasks-thunk';
 import { CloseXsWhiteIcon } from '@alfalab/icons-classic/CloseXsWhiteIcon';
-import { changeStatusAC, changeTaskTextAC } from '../../../redux/actions/tasks-actions';
 
 import styles from '../style.module.scss';
 
@@ -25,12 +24,12 @@ export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
     dispatch(deleteTaskTC(todolistId, task.id));
   }, [dispatch, task.id, todolistId]);
 
-  const onChangeStatusHandler = useCallback(
+  const changeStatusTask = useCallback(
     (e?: ChangeEvent<HTMLInputElement>) => {
       dispatch(
-        changeStatusAC(
+        updateTaskTC(
           task.id,
-          e?.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New,
+          { status: e?.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New },
           todolistId
         )
       );
@@ -40,16 +39,16 @@ export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
 
   const newEditableValue = useCallback(
     (newValue: string) => {
-      dispatch(changeTaskTextAC(task.id, newValue, todolistId));
+      dispatch(updateTaskTC(task.id, { title: newValue }, todolistId));
     },
     [dispatch, task.id, todolistId]
   );
-
+  console.log(task.status);
   return (
     <li className={cn(styles.item)}>
       <Checkbox
         checked={task.status === TaskStatuses.Completed}
-        onChange={onChangeStatusHandler}
+        onChange={changeStatusTask}
         className={cn(styles.checkbox)}
       />
       <EditableSpan title={task.title} newEditableValue={newEditableValue} />

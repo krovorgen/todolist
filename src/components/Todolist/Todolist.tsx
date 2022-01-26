@@ -9,7 +9,7 @@ import { Task } from './Task';
 
 import styles from './style.module.scss';
 import { TaskStatuses } from '../../redux/actions/types/tasks-actions.type';
-import { addTaskTC, fetchTasksThunk } from '../../redux/thunk/tasks-thunk';
+import { addTaskTC, fetchTasksTC } from '../../redux/thunk/tasks-thunk';
 
 export interface ITodolistProps {
   todolistId: string;
@@ -67,7 +67,7 @@ export const Todolist: FC<ITodolistProps> = memo(
     }
 
     useEffect(() => {
-      dispatch(fetchTasksThunk(todolistId));
+      dispatch(fetchTasksTC(todolistId));
     }, [dispatch, todolistId]);
 
     return (

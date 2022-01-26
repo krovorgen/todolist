@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { UpdateTaskModelType } from '../redux/thunk/tasks-thunk';
 
 export type ResponseType<T = Object> = {
   messages: string[];
@@ -18,12 +19,12 @@ export type TodolistTask = {
   title: string;
   status: number;
   priority: number;
-  startDate: Date;
-  deadline: Date;
+  startDate?: Date | string;
+  deadline?: Date | string;
   id: string;
   todoListId: string;
   order: number;
-  addedDate: Date;
+  addedDate: Date | string;
 };
 
 export type TodolistTasksType = {
@@ -37,9 +38,7 @@ export type CreateTaskRT = {
 };
 
 export type CreateTodolistRT = {
-  data: {
-    item: TodolistType;
-  };
+  item: TodolistType;
 };
 
 export type UpdateTodolistTitleRT = {
@@ -92,7 +91,7 @@ export const api = {
   deleteTodolistsTask(todolistId: string, taskId: string) {
     return instance.delete<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`);
   },
-  updateTaskTodolists(todolistId: string, taskId: string, taskData: UpdateTaskType) {
+  updateTaskTodolists(todolistId: string, taskId: string, taskData: UpdateTaskModelType) {
     return instance.put<ResponseType>(`todo-lists/${todolistId}/tasks/${taskId}`, taskData);
   },
 };
