@@ -3,23 +3,40 @@ import { api } from '../../api';
 import { addTaskAC, removeTaskAC, setTaskAC, updateTaskAC } from '../actions/tasks-actions';
 import { toast } from 'react-toastify';
 import { RootStateType } from '../../types';
+import { SetStatusAppAC } from '../actions/app-actions';
 
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
-  api.getTodolistsTasks(todolistId).then(({ data }) => dispatch(setTaskAC(data.items, todolistId)));
+  dispatch(SetStatusAppAC('loading'));
+  api
+    .getTodolistsTasks(todolistId)
+    .then(({ data }) => {
+      dispatch(setTaskAC(data.items, todolistId));
+    })
+    .finally(() => dispatch(SetStatusAppAC('idle')));
 };
 
 export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: Dispatch) => {
-  api.deleteTodolistsTask(todolistId, taskId).then(() => {
-    dispatch(removeTaskAC(taskId, todolistId));
-    toast.success(`task was delete`);
-  });
+  dispatch(SetStatusAppAC('loading'));
+  api
+    .deleteTodolistsTask(todolistId, taskId)
+    .then(({ data }) => {
+      if (data.resultCode !== 0) return toast.error(data.messages[0]);
+      dispatch(removeTaskAC(taskId, todolistId));
+      toast.success(`task was delete`);
+    })
+    .finally(() => dispatch(SetStatusAppAC('idle')));
 };
 
 export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispatch) => {
-  api.createTodolistsTasks(todolistId, title).then(({ data }) => {
-    dispatch(addTaskAC(data.data.item));
-    toast.success(`task ${title} was created`);
-  });
+  dispatch(SetStatusAppAC('loading'));
+  api
+    .createTodolistsTasks(todolistId, title)
+    .then(({ data }) => {
+      if (data.resultCode !== 0) return toast.error(data.messages[0]);
+      dispatch(addTaskAC(data.data.item));
+      toast.success(`task ${title} was created`);
+    })
+    .finally(() => dispatch(SetStatusAppAC('idle')));
 };
 
 export type UpdateTaskModelType = {
@@ -34,6 +51,7 @@ export type UpdateTaskModelType = {
 export const updateTaskTC =
   (taskId: string, model: UpdateTaskModelType, todolistId: string) =>
   (dispatch: Dispatch, getState: () => RootStateType) => {
+    dispatch(SetStatusAppAC('loading'));
     const task = getState().tasks[todolistId].find((t) => t.id === taskId);
 
     const apiModel: UpdateTaskModelType = {
@@ -46,7 +64,11 @@ export const updateTaskTC =
       ...model,
     };
 
-    api.updateTaskTodolists(todolistId, taskId, apiModel).then(() => {
-      dispatch(updateTaskAC(taskId, model, todolistId));
-    });
+    api
+      .updateTaskTodolists(todolistId, taskId, apiModel)
+      .then(({ data }) => {
+        if (data.resultCode !== 0) return toast.error(data.messages[0]);
+        dispatch(updateTaskAC(taskId, model, todolistId));
+      })
+      .finally(() => dispatch(SetStatusAppAC('idle')));
   };

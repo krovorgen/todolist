@@ -60,6 +60,9 @@ const initialStore = {
       },
     ],
   },
+  app: {
+    status: 'loading',
+  },
 };
 
 const store = createStore(rootReducer, initialStore as RootStateType);

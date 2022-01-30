@@ -43,7 +43,6 @@ export const Task: FC<TaskProps> = memo(({ task, todolistId }) => {
     },
     [dispatch, task.id, todolistId]
   );
-  console.log(task.status);
   return (
     <li className={cn(styles.item)}>
       <Checkbox
