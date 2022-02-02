@@ -1,6 +1,5 @@
 import { ActionsType, AppActionsType } from '../actions/app-actions';
-
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
+import { RequestStatusType } from '../../types';
 
 export type InitialStateType = {
   status: RequestStatusType;

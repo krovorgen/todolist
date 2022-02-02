@@ -4,6 +4,7 @@ import { FilterType, TodolistDataType } from '../../../types';
 import {
   addTodolistAC,
   changeTodolistFilterAC,
+  changeTodolistLoadingAC,
   changeTodolistTitleAC,
   removeTodolistAC,
   setTodolistAC,
@@ -15,8 +16,22 @@ test('correct todolist should be removed', () => {
   let todolistId2 = v1();
 
   const startState: TodolistDataType[] = [
-    { id: todolistId1, title: 'What to learn', filter: 'all', addedDate: new Date(), order: 0 },
-    { id: todolistId2, title: 'What to buy', filter: 'all', addedDate: new Date(), order: 0 },
+    {
+      id: todolistId1,
+      title: 'What to learn',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
+    {
+      id: todolistId2,
+      title: 'What to buy',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
   ];
 
   const action: ReturnType<typeof removeTodolistAC> = removeTodolistAC(todolistId1);
@@ -34,8 +49,22 @@ test('correct todolist should be added', () => {
   let newTodolistTitle = 'New Todolist';
 
   const startState: TodolistDataType[] = [
-    { id: todolistId1, title: 'What to learn', filter: 'all', addedDate: new Date(), order: 0 },
-    { id: todolistId2, title: 'What to buy', filter: 'all', addedDate: new Date(), order: 0 },
+    {
+      id: todolistId1,
+      title: 'What to learn',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
+    {
+      id: todolistId2,
+      title: 'What to buy',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
   ];
 
   const endState = todolistsReducer(
@@ -59,8 +88,22 @@ test('correct todolist should change its name', () => {
   let newTodolistTitle = 'New Todolist';
 
   const startState: TodolistDataType[] = [
-    { id: todolistId1, title: 'What to learn', filter: 'all', addedDate: new Date(), order: 0 },
-    { id: todolistId2, title: 'What to buy', filter: 'all', addedDate: new Date(), order: 0 },
+    {
+      id: todolistId1,
+      title: 'What to learn',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
+    {
+      id: todolistId2,
+      title: 'What to buy',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
   ];
 
   const endState = todolistsReducer(
@@ -79,14 +122,57 @@ test('correct filter of todolist should be changed', () => {
   let newFilter: FilterType = 'completed';
 
   const startState: TodolistDataType[] = [
-    { id: todolistId1, title: 'What to learn', filter: 'all', addedDate: new Date(), order: 0 },
-    { id: todolistId2, title: 'What to buy', filter: 'all', addedDate: new Date(), order: 0 },
+    {
+      id: todolistId1,
+      title: 'What to learn',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
+    {
+      id: todolistId2,
+      title: 'What to buy',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
   ];
 
   const endState = todolistsReducer(startState, changeTodolistFilterAC(todolistId2, newFilter));
 
   expect(endState[0].filter).toBe('all');
   expect(endState[1].filter).toBe(newFilter);
+});
+
+test('correct loadingStatus of todolist should be changed', () => {
+  let todolistId1 = v1();
+  let todolistId2 = v1();
+
+  const startState: TodolistDataType[] = [
+    {
+      id: todolistId1,
+      title: 'What to learn',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
+    {
+      id: todolistId2,
+      title: 'What to buy',
+      filter: 'all',
+      addedDate: new Date(),
+      order: 0,
+      loadingStatus: 'idle',
+    },
+  ];
+
+  const endState = todolistsReducer(startState, changeTodolistLoadingAC(todolistId2, 'loading'));
+
+  expect(endState[0].loadingStatus).toBe('idle');
+  expect(endState[1].loadingStatus).toBe('loading');
 });
 
 test('set todolist', () => {

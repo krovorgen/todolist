@@ -1,8 +1,14 @@
-import { addTaskAC, removeTaskAC, setTaskAC, updateTaskAC } from '../../actions/tasks-actions';
+import {
+  addTaskAC,
+  removeTaskAC,
+  setTaskAC,
+  TaskPriorities,
+  TaskStatuses,
+  updateTaskAC,
+} from '../../actions/tasks-actions';
 import { AllTasksType } from '../../../types';
 import { tasksReducer } from '../tasks-reducer';
 import { addTodolistAC, removeTodolistAC, setTodolistAC } from '../../actions/todolists-actions';
-import { TaskPriorities, TaskStatuses } from '../../actions/types/tasks-actions.type';
 
 test('correct task should be deleted from correct array', () => {
   const startState: AllTasksType = {

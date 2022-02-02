@@ -1,5 +1,5 @@
 import { TodolistDataType } from '../../types';
-import { TodolistsActionsType, TodolistsActionType } from '../actions/types/todolists-actions.type';
+import { TodolistsActionsType, TodolistsActionType } from '../actions/todolists-actions';
 
 const initialState: TodolistDataType[] = [];
 
@@ -12,6 +12,7 @@ export const todolistsReducer = (
       return action.payload.map((tl) => ({
         ...tl,
         filter: 'all',
+        loadingStatus: 'idle',
       }));
     case TodolistsActionsType.ADD_TODOLIST:
       return [
@@ -19,6 +20,7 @@ export const todolistsReducer = (
         {
           ...action.payload,
           filter: 'all',
+          loadingStatus: 'idle',
         },
       ];
     case TodolistsActionsType.REMOVE_TODOLIST:
@@ -31,7 +33,10 @@ export const todolistsReducer = (
       return state.map((tl) =>
         tl.id === action.payload.id ? { ...tl, filter: action.payload.filter } : tl
       );
-
+    case TodolistsActionsType.CHANGE_TODOLIST_LOADING:
+      return state.map((tl) =>
+        tl.id === action.payload.id ? { ...tl, loadingStatus: action.payload.status } : tl
+      );
     default:
       return state;
   }

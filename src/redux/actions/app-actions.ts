@@ -1,10 +1,10 @@
-import { RequestStatusType } from '../reducers/app-reducer';
+import { RequestStatusType } from '../../types';
 
 export enum AppActionsType {
   SetStatus = 'SetStatus',
 }
 
-export type ActionsType = ReturnType<typeof SetStatusAppAC>;
+export type ActionsType = ReturnType<typeof setStatusAppAC>;
 
-export const SetStatusAppAC = (status: RequestStatusType) =>
+export const setStatusAppAC = (status: RequestStatusType) =>
   ({ type: AppActionsType.SetStatus, payload: status } as const);

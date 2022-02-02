@@ -1,5 +1,5 @@
 import { appReducer, InitialStateType } from '../app-reducer';
-import { SetStatusAppAC } from '../../actions/app-actions';
+import { setStatusAppAC } from '../../actions/app-actions';
 
 let initialState: InitialStateType;
 
@@ -10,7 +10,7 @@ beforeEach(() => {
 });
 
 test('change status app on loading', () => {
-  const endState = appReducer(initialState, SetStatusAppAC('loading'));
+  const endState = appReducer(initialState, setStatusAppAC('loading'));
 
   expect(initialState.status).toBe('idle');
   expect(endState.status).toBe('loading');

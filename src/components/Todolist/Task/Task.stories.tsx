@@ -3,9 +3,9 @@ import { Meta, Story } from '@storybook/react';
 
 import { Task, TaskProps } from './Task';
 import { ReduxStoreProviderDecorator } from '../../../stories';
-import { TaskPriorities, TaskStatuses } from '../../../redux/actions/types/tasks-actions.type';
 
 import './styles.module.scss';
+import { TaskPriorities, TaskStatuses } from '../../../redux/actions/tasks-actions';
 
 export default {
   title: 'Components/Task',

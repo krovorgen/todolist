@@ -3,7 +3,7 @@ import { RootStateType } from '../types';
 import { combineReducers, createStore } from 'redux';
 import { todolistsReducer } from '../redux/reducers/todolists-reducer';
 import { tasksReducer } from '../redux/reducers/tasks-reducer';
-import { TaskPriorities, TaskStatuses } from '../redux/actions/types/tasks-actions.type';
+import { TaskPriorities, TaskStatuses } from '../redux/actions/tasks-actions';
 
 const rootReducer = combineReducers({
   todolists: todolistsReducer,
@@ -18,6 +18,7 @@ const initialStore = {
       filter: 'all',
       addedDate: new Date(),
       order: 0,
+      loadingStatus: 'idle',
     },
   ],
   tasks: {

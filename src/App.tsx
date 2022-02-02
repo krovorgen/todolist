@@ -38,14 +38,7 @@ export const App: FC = () => {
         <AddItemForm callback={addTodolist} labelInput="Todolist title" addClass={styles.form} />
         <ul className={styles.list}>
           {todolists.map((todolist) => {
-            return (
-              <Todolist
-                key={todolist.id}
-                todolistId={todolist.id}
-                title={todolist.title}
-                filter={todolist.filter}
-              />
-            );
+            return <Todolist key={todolist.id} todolist={todolist} />;
           })}
         </ul>
       </div>

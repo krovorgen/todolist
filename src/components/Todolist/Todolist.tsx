@@ -1,25 +1,25 @@
 import React, { FC, memo, useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FilterType, RootStateType } from '../../types';
-import { EditableSpan } from '../EditableSpan';
-import { AddItemForm } from '../AddItemForm';
 import { CloseMWhiteIcon } from '@alfalab/icons-classic/CloseMWhiteIcon';
 import { Button } from '@alfalab/core-components/button';
-import { Task } from './Task';
 
-import styles from './style.module.scss';
-import { TaskStatuses } from '../../redux/actions/types/tasks-actions.type';
+import { FilterType, RootStateType, TodolistDataType } from '../../types';
+import { EditableSpan } from '../EditableSpan';
+import { AddItemForm } from '../AddItemForm';
 import { addTaskTC, fetchTasksTC } from '../../redux/thunk/tasks-thunk';
 import { changeTodolistFilterAC } from '../../redux/actions/todolists-actions';
 import { deleteTodolistTC, updateTitleTodolistTC } from '../../redux/thunk/todolists-thunk';
+import { Task } from './Task';
+
+import styles from './style.module.scss';
+import { TaskStatuses } from '../../redux/actions/tasks-actions';
 
 export interface ITodolistProps {
-  todolistId: string;
-  title: string;
-  filter: FilterType;
+  todolist: TodolistDataType;
 }
 
-export const Todolist: FC<ITodolistProps> = memo(({ todolistId, title, filter }) => {
+export const Todolist: FC<ITodolistProps> = memo(({ todolist }) => {
+  const { id: todolistId, title, filter, loadingStatus } = todolist;
   const dispatch = useDispatch();
 
   const tasks = useSelector((state: RootStateType) => state.tasks[todolistId]);
@@ -70,13 +70,24 @@ export const Todolist: FC<ITodolistProps> = memo(({ todolistId, title, filter })
     <li className={styles.todolist}>
       <div className={styles.head}>
         <EditableSpan title={title} newEditableValue={changeTitleTodolist} />
-        <Button onClick={removeTodolist} view="primary" leftAddons={<CloseMWhiteIcon />} size="s" />
+        <Button
+          onClick={removeTodolist}
+          view="primary"
+          disabled={loadingStatus === 'loading'}
+          leftAddons={<CloseMWhiteIcon />}
+          size="s"
+        />
       </div>
-      <AddItemForm callback={addTask} labelInput="Task title" addClass={styles.addTodolist} />
+      <AddItemForm
+        callback={addTask}
+        disabled={loadingStatus === 'loading'}
+        labelInput="Task title"
+        addClass={styles.addTodolist}
+      />
       <ul className={styles.items}>
-        {tasksForTodolist.map((task) => {
-          return <Task key={task.id} task={task} todolistId={todolistId} />;
-        })}
+        {tasksForTodolist.map((task) => (
+          <Task key={task.id} task={task} todolistId={todolistId} />
+        ))}
       </ul>
       {tasks.length !== 0 && (
         <div className={styles.navigation}>

@@ -1,6 +1,6 @@
 import { AllTasksType } from '../../types';
-import { TasksActionsType, TasksActionType } from '../actions/types/tasks-actions.type';
-import { TodolistsActionsType } from '../actions/types/todolists-actions.type';
+import { TodolistsActionsType } from '../actions/todolists-actions';
+import { TasksActionsType, TasksActionType } from '../actions/tasks-actions';
 
 const initialState: AllTasksType = {};
 

@@ -5,6 +5,7 @@ export type FilterType = 'all' | 'active' | 'completed';
 
 export type TodolistDataType = TodolistType & {
   filter: FilterType;
+  loadingStatus: RequestStatusType;
 };
 
 export interface AllTasksType {
@@ -12,3 +13,5 @@ export interface AllTasksType {
 }
 
 export type RootStateType = ReturnType<typeof rootReducer>;
+
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed';
