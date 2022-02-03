@@ -4,6 +4,7 @@ import { addTaskAC, removeTaskAC, setTaskAC, updateTaskAC } from '../actions/tas
 import { toast } from 'react-toastify';
 import { RootStateType } from '../../types';
 import { setStatusAppAC } from '../actions/app-actions';
+import { catchHandler } from '../../helpers/catchHandler';
 
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
   dispatch(setStatusAppAC('loading'));
@@ -12,6 +13,7 @@ export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
     .then(({ data }) => {
       dispatch(setTaskAC(data.items, todolistId));
     })
+    .catch(catchHandler)
     .finally(() => dispatch(setStatusAppAC('idle')));
 };
 
@@ -24,6 +26,7 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
       dispatch(removeTaskAC(taskId, todolistId));
       toast.success(`task was delete`);
     })
+    .catch(catchHandler)
     .finally(() => dispatch(setStatusAppAC('idle')));
 };
 
@@ -36,6 +39,7 @@ export const addTaskTC = (todolistId: string, title: string) => (dispatch: Dispa
       dispatch(addTaskAC(data.data.item));
       toast.success(`task ${title} was created`);
     })
+    .catch(catchHandler)
     .finally(() => dispatch(setStatusAppAC('idle')));
 };
 
@@ -70,5 +74,6 @@ export const updateTaskTC =
         if (data.resultCode !== 0) return toast.error(data.messages[0]);
         dispatch(updateTaskAC(taskId, model, todolistId));
       })
+      .catch(catchHandler)
       .finally(() => dispatch(setStatusAppAC('idle')));
   };
