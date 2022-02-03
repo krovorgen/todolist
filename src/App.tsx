@@ -1,27 +1,17 @@
-import React, { FC, useCallback, useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
-import { Typography } from '@alfalab/core-components/typography';
+import { Route, Routes } from 'react-router-dom';
 
 import { RootStateType } from './types';
-import { AddItemForm } from './components/AddItemForm';
-import { Todolist } from './components/Todolist';
 import { Progress } from './components/Progress';
-import { addTodolistTC, fetchTodolistsTC } from './redux/thunk/todolists-thunk';
-
-import styles from './styles.module.scss';
+import { fetchTodolistsTC } from './redux/thunk/todolists-thunk';
+import { Main } from './pages/Main';
+import { Login } from './pages/Login';
 
 export const App: FC = () => {
   const dispatch = useDispatch();
-  const todolists = useSelector((state: RootStateType) => state.todolists);
   const statusApp = useSelector((state: RootStateType) => state.app.status);
-
-  const addTodolist = useCallback(
-    (title: string) => {
-      dispatch(addTodolistTC(title));
-    },
-    [dispatch]
-  );
 
   useEffect(() => {
     dispatch(fetchTodolistsTC());
@@ -30,18 +20,10 @@ export const App: FC = () => {
   return (
     <>
       {statusApp === 'loading' ? <Progress /> : null}
-      <div className={`container`}>
-        <Typography.Title tag="h1" className={styles.title}>
-          Todolist
-        </Typography.Title>
-
-        <AddItemForm callback={addTodolist} labelInput="Todolist title" addClass={styles.form} />
-        <ul className={styles.list}>
-          {todolists.map((todolist) => {
-            return <Todolist key={todolist.id} todolist={todolist} />;
-          })}
-        </ul>
-      </div>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+      </Routes>
       <ToastContainer
         position="bottom-left"
         autoClose={2000}

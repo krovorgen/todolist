@@ -57,6 +57,16 @@ export type UpdateTaskType = {
   deadline: Date | string;
 };
 
+export type CurrentUserRT = {
+  id: number;
+  email: string;
+  login: string;
+};
+
+export type LoginRT = {
+  userId: string;
+};
+
 const instance = axios.create({
   withCredentials: true,
   headers: {
@@ -66,6 +76,19 @@ const instance = axios.create({
 });
 
 export const api = {
+  currentUser() {
+    return instance.get<ResponseType<CurrentUserRT>>(`auth/me`);
+  },
+  login(email: string, password: string, rememberMe: boolean) {
+    return instance.post<ResponseType<LoginRT>>(`auth/login`, {
+      email,
+      password,
+      rememberMe,
+    });
+  },
+  logout() {
+    return instance.delete<ResponseType>(`auth/login`);
+  },
   getTodolists() {
     return instance.get<TodolistType[]>(`todo-lists`);
   },
