@@ -1,14 +1,14 @@
+import { AllTasksType } from '../../../types';
 import {
   addTaskAC,
   removeTaskAC,
   setTaskAC,
   TaskPriorities,
+  tasksReducer,
   TaskStatuses,
   updateTaskAC,
-} from '../../actions/tasks-actions';
-import { AllTasksType } from '../../../types';
-import { tasksReducer } from '../tasks-reducer';
-import { addTodolistAC, removeTodolistAC, setTodolistAC } from '../../actions/todolists-actions';
+} from '../tasks-reducer';
+import { addTodolistAC, removeTodolistAC, setTodolistAC } from '../todolists-reducer';
 
 test('correct task should be deleted from correct array', () => {
   const startState: AllTasksType = {
@@ -90,7 +90,7 @@ test('correct task should be deleted from correct array', () => {
     ],
   };
 
-  const action = removeTaskAC('2', 'todolistId2');
+  const action = removeTaskAC({ taskId: '2', todolistId: 'todolistId2' });
 
   const endState = tasksReducer(startState, action);
 
@@ -346,7 +346,13 @@ test('status of specified task should be changed', () => {
     ],
   };
 
-  const action = updateTaskAC('2', { status: TaskStatuses.New }, 'todolistId2');
+  const action = updateTaskAC({
+    taskId: '2',
+    model: {
+      status: TaskStatuses.New,
+    },
+    todolistId: 'todolistId2',
+  });
 
   const endState = tasksReducer(startState, action);
 
@@ -435,7 +441,13 @@ test('title of specified task should be changed', () => {
     ],
   };
 
-  const action = updateTaskAC('2', { title: 'sugar' }, 'todolistId2');
+  const action = updateTaskAC({
+    taskId: '2',
+    model: {
+      title: 'sugar',
+    },
+    todolistId: 'todolistId2',
+  });
 
   const endState = tasksReducer(startState, action);
 
@@ -649,8 +661,8 @@ test('empty arrays should be added when we set todolists', () => {
 });
 
 test('set tasks', () => {
-  const action = setTaskAC(
-    [
+  const action = setTaskAC({
+    tasks: [
       {
         id: '1',
         title: 'bread',
@@ -664,8 +676,8 @@ test('set tasks', () => {
         priority: TaskPriorities.Low,
       },
     ],
-    '17'
-  );
+    todolistId: '17',
+  });
   const endState = tasksReducer({}, action);
   const keys = Object.keys(endState);
   expect(keys.length).toBe(1);

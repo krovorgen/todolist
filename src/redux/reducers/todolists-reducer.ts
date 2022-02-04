@@ -1,43 +1,57 @@
-import { TodolistDataType } from '../../types';
-import { TodolistsActionsType, TodolistsActionType } from '../actions/todolists-actions';
+import { FilterType, RequestStatusType, TodolistDataType } from '../../types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TodolistType } from '../../api';
 
 const initialState: TodolistDataType[] = [];
 
-export const todolistsReducer = (
-  state = initialState,
-  action: TodolistsActionType
-): TodolistDataType[] => {
-  switch (action.type) {
-    case TodolistsActionsType.SET_TODOLISTS:
+const slice = createSlice({
+  name: 'todolists',
+  initialState,
+  reducers: {
+    setTodolistAC(state, action: PayloadAction<TodolistType[]>) {
       return action.payload.map((tl) => ({
         ...tl,
         filter: 'all',
         loadingStatus: 'idle',
       }));
-    case TodolistsActionsType.ADD_TODOLIST:
-      return [
-        ...state,
-        {
-          ...action.payload,
-          filter: 'all',
-          loadingStatus: 'idle',
-        },
-      ];
-    case TodolistsActionsType.REMOVE_TODOLIST:
-      return state.filter((item) => item.id !== action.payload);
-    case TodolistsActionsType.CHANGE_TODOLIST_TITLE:
-      return state.map((tl) =>
-        tl.id === action.payload.id ? { ...tl, title: action.payload.title } : tl
-      );
-    case TodolistsActionsType.CHANGE_TODOLIST_FILTER:
-      return state.map((tl) =>
-        tl.id === action.payload.id ? { ...tl, filter: action.payload.filter } : tl
-      );
-    case TodolistsActionsType.CHANGE_TODOLIST_LOADING:
-      return state.map((tl) =>
-        tl.id === action.payload.id ? { ...tl, loadingStatus: action.payload.status } : tl
-      );
-    default:
-      return state;
-  }
-};
+    },
+    removeTodolistAC(state, action: PayloadAction<string>) {
+      const index = state.findIndex((tl) => tl.id === action.payload);
+      if (index !== -1) state.splice(index, 1);
+    },
+    addTodolistAC(state, action: PayloadAction<TodolistType>) {
+      state.push({
+        ...action.payload,
+        filter: 'all',
+        loadingStatus: 'idle',
+      });
+    },
+    changeTodolistTitleAC(state, action: PayloadAction<{ todolistId: string; title: string }>) {
+      const index = state.findIndex((tl) => tl.id === action.payload.todolistId);
+      if (index !== -1) state[index].title = action.payload.title;
+    },
+    changeTodolistLoadingAC(
+      state,
+      action: PayloadAction<{ todolistId: string; status: RequestStatusType }>
+    ) {
+      const index = state.findIndex((tl) => tl.id === action.payload.todolistId);
+      if (index !== -1) state[index].loadingStatus = action.payload.status;
+    },
+    changeTodolistFilterAC(
+      state,
+      action: PayloadAction<{ todolistId: string; newFilter: FilterType }>
+    ) {
+      const index = state.findIndex((tl) => tl.id === action.payload.todolistId);
+      if (index !== -1) state[index].filter = action.payload.newFilter;
+    },
+  },
+});
+export const todolistsReducer = slice.reducer;
+export const {
+  setTodolistAC,
+  removeTodolistAC,
+  addTodolistAC,
+  changeTodolistTitleAC,
+  changeTodolistLoadingAC,
+  changeTodolistFilterAC,
+} = slice.actions;

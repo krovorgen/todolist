@@ -21,6 +21,7 @@ specifiers:
   '@types/react': ^17.0.0
   '@types/react-dom': ^17.0.0
   '@types/react-redux': ^7.1.18
+  '@types/redux-logger': ^3.0.9
   '@types/uuid': ^8.3.0
   axios: ^0.25.0
   classnames: ^2.3.1
@@ -39,6 +40,7 @@ specifiers:
   react-scripts: 5.0.0
   react-toastify: ^8.1.0
   redux: ^4.1.0
+  redux-logger: ^3.0.6
   redux-thunk: ^2.4.1
   start-server-and-test: ^1.14.0
   stylelint: ^13.13.1
@@ -63,6 +65,7 @@ dependencies:
   '@types/react': 17.0.38
   '@types/react-dom': 17.0.11
   '@types/react-redux': 7.1.22
+  '@types/redux-logger': 3.0.9
   '@types/uuid': 8.3.4
   axios: 0.25.0
   final-form: 4.20.6
@@ -74,6 +77,7 @@ dependencies:
   react-scripts: 5.0.0_50d7c7cc35d90fd285da64a7b1030eba
   react-toastify: 8.1.1_react-dom@17.0.2+react@17.0.2
   redux: 4.1.2
+  redux-logger: 3.0.6
   redux-thunk: 2.4.1_redux@4.1.2
   typescript: 4.5.5
   uuid: 8.3.2
@@ -4562,6 +4566,12 @@ packages:
       '@types/scheduler': 0.16.2
       csstype: 3.0.10
 
+  /@types/redux-logger/3.0.9:
+    resolution: {integrity: sha512-cwYhVbYNgH01aepeMwhd0ABX6fhVB2rcQ9m80u8Fl50ZODhsZ8RhQArnLTkE7/Zrfq4Sz/taNoF7DQy9pCZSKg==}
+    dependencies:
+      redux: 4.1.2
+    dev: false
+
   /@types/resize-observer-browser/0.1.7:
     resolution: {integrity: sha512-G9eN0Sn0ii9PWQ3Vl72jDPgeJwRWhv2Qk/nQkJuWmRmOB4HX3/BhD5SE1dZs/hzPZL/WKnvF0RHdTSG54QJFyg==}
     dev: false
@@ -7327,6 +7337,10 @@ packages:
 
   /dedent/0.7.0:
     resolution: {integrity: sha1-JJXduvbrh0q7Dhvp3yLS5aVEMmw=}
+
+  /deep-diff/0.3.8:
+    resolution: {integrity: sha1-wB3mPvsO7JeYgB1Ax+Da4ltYLIQ=}
+    dev: false
 
   /deep-equal/1.1.1:
     resolution: {integrity: sha512-yd9c5AdiqVcR+JjcwUQb9DkhJc8ngNr0MahEBGvDiJw8puWab2yZlh+nkasOnZP+EGTAP6rRp2JzJhJZzvNF8g==}
@@ -14554,6 +14568,12 @@ packages:
     dependencies:
       css-unit-converter: 1.1.2
       postcss-value-parser: 3.3.1
+    dev: false
+
+  /redux-logger/3.0.6:
+    resolution: {integrity: sha1-91VZZvMJjzyIYExEnPC69XeCdL8=}
+    dependencies:
+      deep-diff: 0.3.8
     dev: false
 
   /redux-thunk/2.4.1_redux@4.1.2:

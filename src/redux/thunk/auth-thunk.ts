@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
 import { api, LoginDataResponse } from '../../api';
-import { setStatusAppAC } from '../actions/app-actions';
 import { catchHandler } from '../../helpers/catchHandler';
 import { toast } from 'react-toastify';
-import { setLoggedStatusAC } from '../actions/auth-actions';
+import { setLoggedStatusAC } from '../reducers/auth-reducer';
+import { setStatusAppAC } from '../reducers/app-reducer';
 
 export const loginTC = (data: LoginDataResponse) => (dispatch: Dispatch) => {
   dispatch(setStatusAppAC('loading'));

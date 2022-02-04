@@ -8,9 +8,9 @@ import { Button } from '@alfalab/core-components/button';
 import { TodolistTask } from '../../../api';
 import { deleteTaskTC, updateTaskTC } from '../../../redux/thunk/tasks-thunk';
 import { CloseXsWhiteIcon } from '@alfalab/icons-classic/CloseXsWhiteIcon';
+import { TaskStatuses } from '../../../redux/reducers/tasks-reducer';
 
 import styles from '../style.module.scss';
-import { TaskStatuses } from '../../../redux/actions/tasks-actions';
 
 export type TaskProps = {
   task: TodolistTask;

@@ -1,5 +1,5 @@
-import { ActionsType, AppActionsType } from '../actions/app-actions';
 import { RequestStatusType } from '../../types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type InitialStateType = {
   status: RequestStatusType;
@@ -11,13 +11,18 @@ const initialState: InitialStateType = {
   initialized: true,
 };
 
-export const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
-  switch (action.type) {
-    case AppActionsType.SetStatus:
-      return { ...state, status: action.payload };
-    case AppActionsType.SetInitialized:
-      return { ...state, initialized: action.payload };
-    default:
-      return state;
-  }
-};
+const slice = createSlice({
+  name: 'app',
+  initialState,
+  reducers: {
+    setStatusAppAC(state, action: PayloadAction<RequestStatusType>) {
+      state.status = action.payload;
+    },
+    changeInitializedStatusAC(state, action: PayloadAction<boolean>) {
+      state.initialized = action.payload;
+    },
+  },
+});
+
+export const appReducer = slice.reducer;
+export const { setStatusAppAC, changeInitializedStatusAC } = slice.actions;

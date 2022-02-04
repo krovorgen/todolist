@@ -7,12 +7,12 @@ import { FilterType, RootStateType, TodolistDataType } from '../../types';
 import { EditableSpan } from '../EditableSpan';
 import { AddItemForm } from '../AddItemForm';
 import { addTaskTC, fetchTasksTC } from '../../redux/thunk/tasks-thunk';
-import { changeTodolistFilterAC } from '../../redux/actions/todolists-actions';
 import { deleteTodolistTC, updateTitleTodolistTC } from '../../redux/thunk/todolists-thunk';
 import { Task } from './Task';
 
 import styles from './style.module.scss';
-import { TaskStatuses } from '../../redux/actions/tasks-actions';
+import { changeTodolistFilterAC } from '../../redux/reducers/todolists-reducer';
+import { TaskStatuses } from '../../redux/reducers/tasks-reducer';
 
 export interface ITodolistProps {
   todolist: TodolistDataType;
@@ -44,7 +44,7 @@ export const Todolist: FC<ITodolistProps> = memo(({ todolist }) => {
 
   const onChangeFilter = useCallback(
     (filterValue: FilterType) => {
-      dispatch(changeTodolistFilterAC(todolistId, filterValue));
+      dispatch(changeTodolistFilterAC({ todolistId, newFilter: filterValue }));
     },
     [dispatch, todolistId]
   );

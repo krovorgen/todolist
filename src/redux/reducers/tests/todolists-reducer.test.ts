@@ -1,6 +1,3 @@
-import { todolistsReducer } from '../todolists-reducer';
-import { v1 } from 'uuid';
-import { FilterType, TodolistDataType } from '../../../types';
 import {
   addTodolistAC,
   changeTodolistFilterAC,
@@ -8,7 +5,11 @@ import {
   changeTodolistTitleAC,
   removeTodolistAC,
   setTodolistAC,
-} from '../../actions/todolists-actions';
+  todolistsReducer,
+} from '../todolists-reducer';
+import { v1 } from 'uuid';
+import { FilterType, TodolistDataType } from '../../../types';
+
 import { TodolistType } from '../../../api';
 
 test('correct todolist should be removed', () => {
@@ -108,7 +109,7 @@ test('correct todolist should change its name', () => {
 
   const endState = todolistsReducer(
     startState,
-    changeTodolistTitleAC(todolistId2, newTodolistTitle)
+    changeTodolistTitleAC({ todolistId: todolistId2, title: newTodolistTitle })
   );
 
   expect(endState[0].title).toBe('What to learn');
@@ -140,7 +141,10 @@ test('correct filter of todolist should be changed', () => {
     },
   ];
 
-  const endState = todolistsReducer(startState, changeTodolistFilterAC(todolistId2, newFilter));
+  const endState = todolistsReducer(
+    startState,
+    changeTodolistFilterAC({ todolistId: todolistId2, newFilter })
+  );
 
   expect(endState[0].filter).toBe('all');
   expect(endState[1].filter).toBe(newFilter);
@@ -169,7 +173,10 @@ test('correct loadingStatus of todolist should be changed', () => {
     },
   ];
 
-  const endState = todolistsReducer(startState, changeTodolistLoadingAC(todolistId2, 'loading'));
+  const endState = todolistsReducer(
+    startState,
+    changeTodolistLoadingAC({ todolistId: todolistId2, status: 'loading' })
+  );
 
   expect(endState[0].loadingStatus).toBe('idle');
   expect(endState[1].loadingStatus).toBe('loading');

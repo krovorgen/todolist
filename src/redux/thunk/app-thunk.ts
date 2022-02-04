@@ -1,9 +1,9 @@
 import { Dispatch } from 'redux';
 import { api } from '../../api';
-import { changeInitializedStatusAC } from '../actions/app-actions';
 import { catchHandler } from '../../helpers/catchHandler';
 import { toast } from 'react-toastify';
-import { setLoggedStatusAC } from '../actions/auth-actions';
+import { setLoggedStatusAC } from '../reducers/auth-reducer';
+import { changeInitializedStatusAC } from '../reducers/app-reducer';
 
 export const initializedTC = () => (dispatch: Dispatch) => {
   api

@@ -1,17 +1,17 @@
 import { Dispatch } from 'redux';
 import { api } from '../../api';
-import { addTaskAC, removeTaskAC, setTaskAC, updateTaskAC } from '../actions/tasks-actions';
 import { toast } from 'react-toastify';
 import { RootStateType } from '../../types';
-import { setStatusAppAC } from '../actions/app-actions';
 import { catchHandler } from '../../helpers/catchHandler';
+import { setStatusAppAC } from '../reducers/app-reducer';
+import { addTaskAC, removeTaskAC, setTaskAC, updateTaskAC } from '../reducers/tasks-reducer';
 
 export const fetchTasksTC = (todolistId: string) => (dispatch: Dispatch) => {
   dispatch(setStatusAppAC('loading'));
   api
     .getTodolistsTasks(todolistId)
     .then(({ data }) => {
-      dispatch(setTaskAC(data.items, todolistId));
+      dispatch(setTaskAC({ tasks: data.items, todolistId }));
     })
     .catch(catchHandler)
     .finally(() => dispatch(setStatusAppAC('idle')));
@@ -23,7 +23,7 @@ export const deleteTaskTC = (todolistId: string, taskId: string) => (dispatch: D
     .deleteTodolistsTask(todolistId, taskId)
     .then(({ data }) => {
       if (data.resultCode !== 0) return toast.error(data.messages[0]);
-      dispatch(removeTaskAC(taskId, todolistId));
+      dispatch(removeTaskAC({ taskId, todolistId }));
       toast.success(`task was delete`);
     })
     .catch(catchHandler)
@@ -72,7 +72,7 @@ export const updateTaskTC =
       .updateTaskTodolists(todolistId, taskId, apiModel)
       .then(({ data }) => {
         if (data.resultCode !== 0) return toast.error(data.messages[0]);
-        dispatch(updateTaskAC(taskId, model, todolistId));
+        dispatch(updateTaskAC({ taskId, model, todolistId }));
       })
       .catch(catchHandler)
       .finally(() => dispatch(setStatusAppAC('idle')));

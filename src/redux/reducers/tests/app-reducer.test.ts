@@ -1,5 +1,9 @@
-import { appReducer, InitialStateType } from '../app-reducer';
-import { changeInitializedStatusAC, setStatusAppAC } from '../../actions/app-actions';
+import {
+  appReducer,
+  changeInitializedStatusAC,
+  InitialStateType,
+  setStatusAppAC,
+} from '../app-reducer';
 
 let initialState: InitialStateType;
 

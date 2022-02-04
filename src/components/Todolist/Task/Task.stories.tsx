@@ -5,7 +5,7 @@ import { Task, TaskProps } from './Task';
 import { ReduxStoreProviderDecorator } from '../../../stories';
 
 import './styles.module.scss';
-import { TaskPriorities, TaskStatuses } from '../../../redux/actions/tasks-actions';
+import { TaskPriorities, TaskStatuses } from '../../../redux/reducers/tasks-reducer';
 
 export default {
   title: 'Components/Task',

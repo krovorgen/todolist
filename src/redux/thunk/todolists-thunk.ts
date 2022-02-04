@@ -1,15 +1,16 @@
 import { Dispatch } from 'redux';
 import { api } from '../../api';
+
+import { toast } from 'react-toastify';
+import { catchHandler } from '../../helpers/catchHandler';
+import { setStatusAppAC } from '../reducers/app-reducer';
 import {
   addTodolistAC,
   changeTodolistLoadingAC,
   changeTodolistTitleAC,
   removeTodolistAC,
   setTodolistAC,
-} from '../actions/todolists-actions';
-import { toast } from 'react-toastify';
-import { setStatusAppAC } from '../actions/app-actions';
-import { catchHandler } from '../../helpers/catchHandler';
+} from '../reducers/todolists-reducer';
 
 export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
   dispatch(setStatusAppAC('loading'));
@@ -24,7 +25,7 @@ export const fetchTodolistsTC = () => (dispatch: Dispatch) => {
 
 export const deleteTodolistTC = (todolistId: string) => (dispatch: Dispatch) => {
   dispatch(setStatusAppAC('loading'));
-  dispatch(changeTodolistLoadingAC(todolistId, 'loading'));
+  dispatch(changeTodolistLoadingAC({ todolistId, status: 'loading' }));
 
   api
     .deleteTodolists(todolistId)
@@ -57,7 +58,7 @@ export const updateTitleTodolistTC =
       .updateTitleTodolists(todolistId, title)
       .then(({ data }) => {
         if (data.resultCode !== 0) return toast.error(data.messages[0]);
-        dispatch(changeTodolistTitleAC(todolistId, title));
+        dispatch(changeTodolistTitleAC({ todolistId, title }));
       })
       .catch(catchHandler)
       .finally(() => dispatch(setStatusAppAC('idle')));

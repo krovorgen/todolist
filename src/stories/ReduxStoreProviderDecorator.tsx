@@ -2,8 +2,7 @@ import { Provider } from 'react-redux';
 import { RootStateType } from '../types';
 import { combineReducers, createStore } from 'redux';
 import { todolistsReducer } from '../redux/reducers/todolists-reducer';
-import { tasksReducer } from '../redux/reducers/tasks-reducer';
-import { TaskPriorities, TaskStatuses } from '../redux/actions/tasks-actions';
+import { TaskPriorities, tasksReducer, TaskStatuses } from '../redux/reducers/tasks-reducer';
 
 const rootReducer = combineReducers({
   todolists: todolistsReducer,
