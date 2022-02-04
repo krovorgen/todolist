@@ -5,21 +5,24 @@ import { Route, Routes } from 'react-router-dom';
 
 import { RootStateType } from './types';
 import { Progress } from './components/Progress';
-import { fetchTodolistsTC } from './redux/thunk/todolists-thunk';
 import { Main } from './pages/Main';
 import { Login } from './pages/Login';
+import { initializedTC } from './redux/thunk/app-thunk';
+import { Preloader } from './components/Preloader';
 
 export const App: FC = () => {
   const dispatch = useDispatch();
-  const statusApp = useSelector((state: RootStateType) => state.app.status);
+  const { status, initialized } = useSelector((state: RootStateType) => state.app);
 
   useEffect(() => {
-    dispatch(fetchTodolistsTC());
+    dispatch(initializedTC());
   }, [dispatch]);
+
+  if (initialized) return <Preloader />;
 
   return (
     <>
-      {statusApp === 'loading' ? <Progress /> : null}
+      {status === 'loading' ? <Progress /> : null}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />

@@ -67,6 +67,12 @@ export type LoginRT = {
   userId: string;
 };
 
+export type LoginDataResponse = {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+};
+
 const instance = axios.create({
   withCredentials: true,
   headers: {
@@ -79,12 +85,8 @@ export const api = {
   currentUser() {
     return instance.get<ResponseType<CurrentUserRT>>(`auth/me`);
   },
-  login(email: string, password: string, rememberMe: boolean) {
-    return instance.post<ResponseType<LoginRT>>(`auth/login`, {
-      email,
-      password,
-      rememberMe,
-    });
+  login(data: LoginDataResponse) {
+    return instance.post<ResponseType<LoginRT>>(`auth/login`, data);
   },
   logout() {
     return instance.delete<ResponseType>(`auth/login`);

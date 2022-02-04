@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import cn from 'classnames';
 import { Field, Form } from 'react-final-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { Navigate } from 'react-router-dom';
+
 import { Input } from '@alfalab/core-components/input';
 import { PasswordInput } from '@alfalab/core-components/password-input';
 import { Typography } from '@alfalab/core-components/typography';
@@ -9,21 +12,22 @@ import { Button } from '@alfalab/core-components/button';
 import { Tooltip } from '@alfalab/core-components/tooltip';
 
 import { composeValidators, required } from '../../helpers/helpers/validators';
+import { loginTC } from '../../redux/thunk/auth-thunk';
+import { LoginDataResponse } from '../../api';
+import { RootStateType } from '../../types';
 
 import styles from './Login.module.scss';
 
-export type SubmitType = {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-};
-
 export const Login = () => {
+  const dispatch = useDispatch();
+  const isLogged = useSelector((state: RootStateType) => state.auth.isLogged);
+
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const onSubmit = (formData: SubmitType) => {
-    let { email, password, rememberMe } = formData;
-    console.log(formData);
+  const onSubmit = (formData: LoginDataResponse) => {
+    dispatch(loginTC(formData));
   };
+
+  if (isLogged) return <Navigate to="/" />;
   return (
     <div className={cn('container', styles.root)}>
       <div className={styles.wrap}>

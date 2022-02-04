@@ -63,6 +63,10 @@ const initialStore = {
   },
   app: {
     status: 'loading',
+    initialized: false,
+  },
+  auth: {
+    isLogged: true,
   },
 };
 
